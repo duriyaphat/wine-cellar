@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LA CAVE — Maison du Vin</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap');
+
+:root{
+  --paper:#15100E; --surface:#1E1714; --surface2:#271D18; --ink:#F1E7D4; --soft:#C4B7A2;
+  --muted:#8E8273; --line:#3A2D26; --line2:#2A201B;
+  --orange:#C9A862; --orange-deep:#B0904A; --orange-tint:rgba(201,168,98,.14);
+  --serif:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;}
+body{background:#100B0A;color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.5;}
+#bg{position:fixed;inset:0;z-index:-2;background:
+  radial-gradient(120% 85% at 50% -15%, #3A0F1E 0%, rgba(58,15,30,0) 52%),
+  radial-gradient(110% 75% at 85% 115%, #241712 0%, rgba(36,23,18,0) 60%),
+  linear-gradient(180deg,#15100E 0%, #0E0A09 100%);}
+#bg::before{content:"";position:absolute;inset:-60%;background:conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(201,168,98,.05) 40deg, transparent 90deg, transparent 360deg);animation:sheen 46s linear infinite;}
+#bg::after{content:"";position:absolute;inset:0;background-image:
+  radial-gradient(1.4px 1.4px at 12% 22%, rgba(231,210,150,.55), transparent 60%),
+  radial-gradient(1.2px 1.2px at 28% 68%, rgba(231,210,150,.4), transparent 60%),
+  radial-gradient(1.6px 1.6px at 47% 38%, rgba(231,210,150,.5), transparent 60%),
+  radial-gradient(1.1px 1.1px at 63% 80%, rgba(231,210,150,.4), transparent 60%),
+  radial-gradient(1.5px 1.5px at 78% 28%, rgba(231,210,150,.55), transparent 60%),
+  radial-gradient(1.2px 1.2px at 88% 60%, rgba(231,210,150,.4), transparent 60%),
+  radial-gradient(1.3px 1.3px at 38% 88%, rgba(231,210,150,.45), transparent 60%),
+  radial-gradient(1.1px 1.1px at 70% 12%, rgba(231,210,150,.4), transparent 60%);
+  background-size:cover;animation:dust 24s ease-in-out infinite alternate;}
+@keyframes sheen{to{transform:rotate(360deg);}}
+@keyframes dust{0%{opacity:.35;transform:translateY(0)}50%{opacity:.7}100%{opacity:.4;transform:translateY(-14px)}}
+button{font-family:inherit;cursor:pointer;}
+::selection{background:var(--orange-tint);}
+
+.hd{position:sticky;top:0;z-index:30;background:rgba(18,12,11,.78);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);}
+.hd-in{max-width:1180px;margin:0 auto;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+.brand{display:flex;flex-direction:column;line-height:1;}
+.brand b{font-family:var(--serif);font-weight:500;font-size:24px;letter-spacing:.04em;}
+.brand span{font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);margin-top:5px;}
+.nav{display:flex;align-items:center;gap:2px;flex-wrap:wrap;}
+.nav button{background:none;border:none;color:var(--soft);font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:9px 14px;position:relative;white-space:nowrap;}
+@media(max-width:640px){.nav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:0;}.nav::-webkit-scrollbar{display:none;}.nav button{padding:9px 11px;flex:0 0 auto;}}
+.nav button:hover{color:var(--ink);}
+.nav button.on{color:var(--orange);}
+.nav button.on::after{content:"";position:absolute;left:14px;right:14px;bottom:3px;height:1.5px;background:var(--orange);}
+.gear{width:32px;height:32px;border:1px solid var(--line);border-radius:50%;background:none;color:var(--soft);font-size:14px;}
+.gear:hover{color:var(--orange);border-color:var(--orange);}
+.gs-ovl{align-items:flex-start;}
+.gs{width:100%;max-width:540px;margin-top:8vh;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:0 30px 70px -20px rgba(0,0,0,.7);}
+.gs .srch{width:100%;font-size:15px;}
+.gs-body{max-height:60vh;overflow-y:auto;margin:14px 0 6px;}
+.gs-sec{margin-bottom:16px;}
+.gs-t{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.gs-row{width:100%;display:flex;align-items:center;gap:11px;padding:10px 10px;border:none;background:none;border-radius:6px;text-align:left;color:var(--ink);font-size:14px;}
+.gs-row:hover{background:var(--orange-tint);}
+.gs-row b{font-family:var(--serif);font-weight:500;}
+.gs-row>span:nth-child(2){flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gs-dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto;}
+.gs-tag{flex:0 0 auto;font-size:11px;color:var(--muted);}
+.wishalert{background:rgba(201,168,98,.1);border:1px solid var(--orange);border-radius:8px;padding:14px 16px;margin:20px 0 4px;font-size:13.5px;color:var(--ink);line-height:1.7;}
+.wishalert b{color:var(--orange);}
+.wishhit{display:inline-block;margin:3px 6px 3px 0;background:var(--orange);color:#1b120a;border:none;border-radius:999px;padding:5px 12px;font-size:12.5px;font-family:var(--serif);}
+.wishhit:hover{background:var(--orange-deep);}
+
+.wrap{max-width:1180px;margin:0 auto;padding:52px 28px 90px;}
+.sec{animation:rise .55s cubic-bezier(.2,.7,.2,1);}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.eyebrow{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--orange);margin-bottom:18px;}
+.display{font-family:var(--serif);font-weight:300;font-size:clamp(40px,7vw,76px);line-height:1.02;letter-spacing:-.01em;margin:0;}
+.display em{font-style:italic;color:var(--orange);}
+.lede{color:var(--soft);font-size:16px;max-width:62ch;margin:18px 0 0;}
+.muted{color:var(--muted);}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:44px;border-top:1px solid var(--orange);}
+.stat{padding:22px 22px 22px 0;border-right:1px solid var(--line);}
+.stat:last-child{border-right:0;}
+.stat .n{font-family:var(--serif);font-weight:300;font-size:clamp(34px,5vw,52px);line-height:1;letter-spacing:-.02em;}
+.stat .l{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:12px;}
+
+.alert{display:flex;gap:16px;align-items:baseline;margin:38px 0;padding:20px 22px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--orange);}
+.invest{margin-top:18px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+.invest b{font-family:var(--serif);font-size:18px;color:var(--ink);text-transform:none;letter-spacing:0;margin-left:6px;}
+.peak{margin-top:30px;background:linear-gradient(120deg,#5A1020,#27101A);border:1px solid var(--orange);color:var(--ink);border-radius:8px;padding:22px 24px;box-shadow:0 20px 40px -24px rgba(0,0,0,.7);}
+.peak-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.peak-h span:first-child{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);}
+.peak-n{font-family:var(--serif);font-size:28px;line-height:1;color:var(--orange);}
+.peak-list{display:flex;flex-wrap:wrap;gap:9px;}
+.peak-chip{background:rgba(201,168,98,.12);border:1px solid rgba(201,168,98,.4);color:var(--ink);border-radius:999px;padding:8px 14px;font-size:13px;}
+.peak-chip:hover{background:rgba(201,168,98,.24);}
+.peak-chip b{font-weight:600;}.peak-chip i{font-style:normal;opacity:.8;}
+.alert .t{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);font-weight:600;white-space:nowrap;}
+.alert .x{font-family:var(--serif);font-size:19px;font-style:italic;color:var(--soft);}
+
+.atlas-head{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin:54px 0 8px;}
+.atlas-head h2{font-family:var(--serif);font-weight:400;font-size:30px;margin:0;}
+.toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;}
+.toggle button{background:none;border:none;padding:9px 22px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);}
+.toggle button.on{background:var(--orange);color:#1b120a;}
+.mapcard{margin-top:24px;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:18px;position:relative;overflow:hidden;}
+.mapcard svg{width:100%;height:auto;display:block;}
+.land{fill:rgba(201,187,163,.10);stroke:rgba(201,168,98,.16);stroke-width:.15;}
+.fr-outline{fill:rgba(201,187,163,.09);stroke:rgba(201,168,98,.4);stroke-width:.5;}
+.grat{stroke:rgba(201,187,163,.08);stroke-width:.12;fill:none;}
+.dot{fill:var(--orange);fill-opacity:.92;stroke:#15100E;stroke-width:.4;cursor:pointer;transition:fill-opacity .15s;}
+.dot:hover{fill-opacity:1;}
+.dot-ring{fill:none;stroke:var(--orange);stroke-width:.3;opacity:.45;}
+.dot.empty{fill:rgba(201,187,163,.3);fill-opacity:.7;}
+.dot.asel{stroke:var(--orange);stroke-width:.8;}
+.chip.dim{opacity:.5;}
+.terroir{margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:26px 28px;animation:rise .4s ease;}
+.terroir-h{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line2);padding-bottom:14px;margin-bottom:18px;}
+.terroir-h h3{font-family:var(--serif);font-weight:400;font-size:26px;margin:0;}
+.terroir-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px;}
+.terroir-grid span,.terroir-notes span{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin-bottom:5px;}
+.terroir-grid p,.terroir-notes p{margin:0;font-size:14px;color:var(--ink);line-height:1.5;}
+.terroir-notes{margin-top:18px;border-top:1px solid var(--line2);padding-top:18px;}
+.terroir-notes p{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--soft);}
+.mapsel{position:absolute;left:18px;top:18px;background:var(--ink);color:var(--paper);padding:8px 14px;border-radius:3px;font-size:12px;letter-spacing:.04em;pointer-events:none;}
+.mapsel b{font-family:var(--serif);font-weight:500;}
+.legend{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:24px;}.chip{display:inline-flex;align-items:baseline;gap:8px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:12.5px;color:var(--soft);background:var(--surface);}
+.chip b{font-family:var(--serif);color:var(--ink);font-size:14px;}
+.chip i{font-style:normal;color:var(--orange);font-size:11px;font-weight:600;}
+.ins{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:24px;}
+.ins-col h4{font-family:var(--serif);font-weight:500;font-size:18px;margin:0 0 14px;}
+.ins-row{display:grid;grid-template-columns:110px 1fr 30px;align-items:center;gap:12px;margin-bottom:9px;font-size:13px;}
+.ins-l{color:var(--soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ins-t{height:6px;background:var(--line2);border-radius:3px;overflow:hidden;}
+.ins-f{display:block;height:100%;background:var(--orange);border-radius:3px;}
+.ins-v{text-align:right;font-family:var(--serif);font-size:15px;}
+@media(max-width:820px){.ins{grid-template-columns:1fr;gap:18px;}}
+
+.cab{max-width:640px;margin:30px auto 0;}
+.cab3{position:relative;max-width:440px;margin:30px auto 0;background:#1c1b18;border-radius:8px;overflow:hidden;}
+.cabswitch{display:flex;gap:6px;align-items:center;margin-top:20px;}
+.cabtab{border:1px solid var(--line);background:none;color:var(--soft);font-size:13px;letter-spacing:.04em;padding:9px 18px;border-radius:999px;}
+.cabtab.on{background:var(--orange);color:#1b120a;border-color:var(--orange);}
+.cabtab:hover:not(.on){border-color:var(--orange);color:var(--orange);}
+.cabren{border:1px solid var(--line);background:none;color:var(--muted);width:34px;height:34px;border-radius:50%;font-size:13px;}
+.cabren:hover{color:var(--orange);border-color:var(--orange);}
+.cab3-img{width:100%;display:block;}
+.cab3-ov{position:absolute;left:27%;width:46%;top:12%;height:79%;display:flex;flex-direction:column;gap:1.1%;}
+.cz{flex:1;background:rgba(18,13,11,.5);backdrop-filter:blur(1px);border:1px solid rgba(255,255,255,.08);border-radius:5px;padding:3px 5px;display:flex;flex-direction:column;justify-content:center;min-height:0;}
+.cz-lab{font-size:8px;letter-spacing:.04em;color:rgba(255,255,255,.72);display:flex;align-items:center;gap:4px;margin-bottom:2px;white-space:nowrap;overflow:hidden;}
+.cz-lab b{font-family:var(--serif);font-weight:500;color:var(--orange);font-size:11px;}
+.cz-lab i{font-style:normal;margin-left:auto;color:rgba(255,255,255,.55);}
+.cz-slots{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;flex:1;overflow:hidden;}
+.czrow{display:flex;justify-content:center;gap:1.5px;}
+.czrow+.czrow{margin-top:-1.5px;}
+.cc{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);box-sizing:border-box;padding:0;}
+.cc.full{background:radial-gradient(circle at 35% 30%, color-mix(in srgb,var(--c) 60%,#fff) 0%, var(--c) 55%);border:1px solid rgba(0,0,0,.35);box-shadow:0 1px 2px rgba(0,0,0,.4);cursor:pointer;}
+.cc.full:hover{outline:2px solid #fff;outline-offset:1px;}
+.cc[data-place]{cursor:pointer;}
+.cc[data-place]:hover{background:rgba(201,168,98,.5);border-color:var(--orange);}
+.cc.full.peak{box-shadow:0 0 0 2px var(--orange),0 0 8px 1px rgba(201,168,98,.7);animation:peakpulse 2s ease-in-out infinite;}
+@keyframes peakpulse{0%,100%{box-shadow:0 0 0 2px var(--orange),0 0 6px 0 rgba(201,168,98,.5);}50%{box-shadow:0 0 0 2px var(--orange),0 0 11px 2px rgba(201,168,98,.95);}}
+#catip{position:fixed;z-index:80;background:var(--ink);color:var(--paper);font-size:12px;padding:8px 11px;border-radius:5px;max-width:240px;pointer-events:none;display:none;box-shadow:0 8px 24px -8px rgba(0,0,0,.5);line-height:1.4;}
+@media(max-width:820px){.cab3{max-width:340px;}.cc{width:8px;height:8px;}.cz-lab{font-size:7px;}}
+.cabinet{margin:30px 0 0;border:2px solid var(--ink);border-radius:8px;padding:14px;background:linear-gradient(180deg,#fff,#FBF7F0);box-shadow:0 30px 50px -30px rgba(28,27,24,.3);}
+.cab-shelf{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;padding:12px 6px;border-bottom:1px solid var(--line);}
+.cab-shelf:last-child{border-bottom:0;}
+.cab-side{display:flex;flex-direction:column;gap:1px;}
+.cab-side b{font-family:var(--serif);font-weight:300;font-size:26px;color:var(--orange);line-height:1;}
+.cab-side span{font-size:10.5px;color:var(--soft);}
+.cab-side i{font-style:normal;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+.cab-rail{display:flex;flex-wrap:wrap;gap:5px;padding:10px 8px;background:linear-gradient(180deg,#F3EEE3,#EFE8DA);border-radius:4px;border:1px solid var(--line);}
+.slot{position:relative;width:26px;height:46px;border-radius:3px;background:#fff;border:1px solid var(--line2);display:flex;align-items:flex-end;justify-content:center;}
+.slot.full{cursor:pointer;border-color:var(--line);}
+.slot.full:hover{border-color:var(--orange);box-shadow:0 0 0 2px var(--orange-tint);}
+.vb{position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:11px;height:34px;border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,color-mix(in srgb,var(--c) 70%,#000) 0%,var(--c) 38%);box-shadow:inset 0 5px 3px -3px rgba(255,255,255,.5);}
+.vb::after{content:"";position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:4px;height:7px;background:var(--c);border-radius:2px;}
+.slotn{position:absolute;top:2px;left:0;right:0;text-align:center;font-size:7px;color:var(--muted);}
+.slot.full .slotn{color:rgba(255,255,255,.0);}
+.caleg{display:flex;flex-wrap:wrap;gap:16px;margin-top:18px;font-size:12px;color:var(--soft);}
+.legi{display:inline-flex;align-items:center;gap:7px;}
+.legi .vb{position:static;transform:none;width:9px;height:20px;}
+@media(max-width:820px){.cab-shelf{grid-template-columns:72px 1fr;}.slot{width:22px;height:40px;}}.cab-frame{border:1px solid var(--ink);border-radius:3px;padding:8px;background:var(--surface);display:flex;flex-direction:column;gap:6px;}
+.shelf{display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:18px;padding:18px 20px;border:1px solid var(--line);border-radius:2px;background:var(--surface);text-align:left;transition:background .15s,border-color .15s;position:relative;overflow:hidden;}
+.shelf:hover{border-color:var(--orange);background:#fffdfa;}
+.shelf.on{border-color:var(--orange);background:var(--orange-tint);}
+.shelf .num{font-family:var(--serif);font-size:30px;font-weight:300;color:var(--orange);line-height:1;}
+.shelf .ti{font-family:var(--serif);font-size:20px;line-height:1.1;}
+.shelf .su{font-size:12px;color:var(--muted);margin-top:3px;}
+.shelf .ct{font-family:var(--serif);font-size:26px;font-weight:300;text-align:right;}
+.shelf .ct small{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
+
+.panel{margin-top:40px;}
+.panel-h{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--orange);padding-bottom:14px;margin-bottom:26px;}
+.panel-h h3{font-family:var(--serif);font-weight:400;font-size:26px;margin:0;}
+.link{background:none;border:none;color:var(--orange);font-size:12px;letter-spacing:.08em;text-transform:uppercase;}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:3px;overflow:hidden;display:flex;flex-direction:column;}
+.card .ph{aspect-ratio:4/3;background:var(--surface2);overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.card .ph img{width:100%;height:100%;object-fit:cover;}
+.card .ph .none{font-family:var(--serif);font-size:30px;color:var(--line);}
+.card .bd{padding:18px 18px 16px;}
+.card .pr{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.card .nm{font-family:var(--serif);font-size:21px;line-height:1.12;margin:3px 0 8px;}
+.card .nm i{font-style:italic;color:var(--orange);}
+.card .me{font-size:12.5px;color:var(--soft);margin-bottom:12px;min-height:18px;}
+.prices{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:12px;font-size:11.5px;color:var(--muted);}
+.prices b{color:var(--ink);font-weight:600;}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+.tag{font-size:10.5px;letter-spacing:.04em;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--soft);}
+.tag.o{border-color:var(--orange);color:var(--orange);}
+.tag.ow{border-color:var(--ink);color:var(--ink);}
+.foot{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line2);padding-top:12px;}
+.cact{display:flex;gap:8px;margin-bottom:12px;}
+.cact button{flex:1;border:1px solid var(--line);background:none;color:var(--soft);font-size:11.5px;padding:8px 6px;border-radius:2px;}
+.cact button:hover{border-color:var(--orange);color:var(--orange);}
+.starrow{display:flex;gap:3px;}
+.star{background:none;border:none;font-size:19px;line-height:1;color:var(--line);padding:0 1px;}
+.star.on{color:var(--orange);}
+.star:hover{color:var(--orange-deep);}
+.qty{display:flex;align-items:center;gap:12px;}
+.qty button{width:26px;height:26px;border:1px solid var(--line);background:none;border-radius:50%;font-size:15px;color:var(--ink);}
+.qty button:hover{border-color:var(--orange);color:var(--orange);}
+.qty span{font-family:var(--serif);font-size:18px;min-width:16px;text-align:center;}
+.del{background:none;border:none;color:var(--muted);font-size:11.5px;}
+.del:hover{color:var(--orange);}
+.score{font-family:var(--serif);font-size:22px;color:var(--orange);float:right;line-height:1;}
+
+.add{display:grid;grid-template-columns:340px 1fr;gap:40px;margin-top:40px;align-items:start;}
+.drop{position:sticky;top:96px;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:22px;display:flex;flex-direction:column;gap:16px;align-items:center;}
+.drop img{width:100%;max-height:340px;object-fit:contain;border-radius:3px;}
+.drop .ph0{width:100%;aspect-ratio:3/4;border:1px dashed var(--line);border-radius:3px;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;color:var(--muted);}
+.drop .ph0 b{font-family:var(--serif);font-size:38px;color:var(--line);font-weight:300;}
+.reading{display:flex;align-items:center;gap:9px;color:var(--soft);font-size:13px;}
+.spin{width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--orange);border-radius:50%;animation:sp .8s linear infinite;}
+@keyframes sp{to{transform:rotate(360deg)}}
+.warn{font-size:12.5px;color:var(--orange-deep);text-align:center;line-height:1.5;}
+.conf{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+
+.btn{border:1px solid var(--ink);background:none;color:var(--ink);padding:13px 22px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;border-radius:2px;transition:.15s;}
+.btn:hover{background:var(--ink);color:var(--paper);}
+.btn.fill{background:var(--orange);border-color:var(--orange);color:#1b120a;}
+.btn.fill:hover{background:var(--orange-deep);border-color:var(--orange-deep);}
+.btn.full{width:100%;}
+.btn[disabled]{opacity:.5;}
+
+.review-top{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.review-top h3{font-family:var(--serif);font-weight:400;font-size:24px;margin:0;}
+.bform{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:22px;margin-bottom:18px;}
+.bform .bh{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px;}
+.bform .bh .ix{font-family:var(--serif);font-size:18px;}
+.bform .bh .ix span{color:var(--orange);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.fld{display:flex;flex-direction:column;gap:6px;}
+.fld>label{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);}
+.fld input,.fld select,.fld textarea,.srch,.conn input{
+  background:var(--paper);border:1px solid var(--line);border-radius:2px;padding:11px 13px;font-family:inherit;font-size:14px;color:var(--ink);width:100%;}
+.fld input:focus,.fld select:focus,.fld textarea:focus,.srch:focus,.conn input:focus{outline:none;border-color:var(--orange);background:var(--surface2);}
+.chk{display:flex;align-items:center;gap:10px;font-size:13.5px;margin-top:14px;}
+.chk input{width:16px;height:16px;accent-color:var(--orange);}
+
+.ctrls{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:24px 0;}
+.money{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:30px;border-top:1px solid var(--orange);border-bottom:1px solid var(--line);}
+.mi{padding:16px 18px 16px 0;border-right:1px solid var(--line);}
+.mi:last-child{border-right:0;}
+.mi span{display:block;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
+.mi b{font-family:var(--serif);font-weight:300;font-size:clamp(20px,3vw,28px);}
+.mi b.up{color:#86B37A;}.mi b.down{color:#C77;}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px;}
+.filters select{background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:9px 12px;font-family:inherit;font-size:12.5px;color:var(--ink);}
+.filters select:focus{outline:none;border-color:var(--orange);}
+.vtoggle{display:flex;border:1px solid var(--line);border-radius:2px;overflow:hidden;}
+.vtoggle button{background:none;border:none;color:var(--soft);font-size:12px;padding:9px 14px;}
+.vtoggle button.on{background:var(--orange);color:#1b120a;}
+@media(max-width:820px){.money{grid-template-columns:1fr 1fr;}.mi:nth-child(2){border-right:0;}.mi{border-bottom:1px solid var(--line);}}.srch{max-width:360px;}
+.sortbar{display:flex;gap:4px;}
+.sortbar button{border:1px solid var(--line);background:none;color:var(--soft);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;padding:9px 13px;border-radius:2px;}
+.sortbar button.on{border-color:var(--orange);color:var(--orange);}
+.tbl{display:flex;flex-direction:column;}
+.tr{display:grid;grid-template-columns:2.4fr .7fr 1.7fr .6fr .6fr .9fr .3fr;align-items:center;gap:12px;padding:14px 4px;border-bottom:1px solid var(--line);font-size:13.5px;}
+.th{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--orange);}
+.tb{display:flex;align-items:center;gap:12px;}
+.tb img{width:34px;height:48px;object-fit:cover;border-radius:2px;border:1px solid var(--line);}
+.tb .none{width:34px;height:48px;background:var(--surface2);display:flex;align-items:center;justify-content:center;color:var(--muted);border-radius:2px;}
+.tb b{font-family:var(--serif);font-weight:500;font-size:16px;}
+
+.foot-note{text-align:center;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:30px;border-top:1px solid var(--line);}
+.jlist{display:flex;flex-direction:column;margin-top:24px;}
+.jrow{display:grid;grid-template-columns:140px 1fr 1.4fr;gap:18px;align-items:baseline;padding:16px 4px;border-bottom:1px solid var(--line);}
+.jdate{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+.jwine{font-size:15px;}.jwine b{font-family:var(--serif);font-weight:500;font-size:17px;}
+.jnote{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--soft);}
+@media(max-width:820px){.jrow{grid-template-columns:1fr;gap:4px;}}
+
+.ovl{position:fixed;inset:0;background:rgba(28,27,24,.4);backdrop-filter:blur(6px);z-index:60;display:flex;align-items:center;justify-content:center;padding:24px;}
+.conn{width:100%;max-width:460px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:36px;}
+.conn h2{font-family:var(--serif);font-weight:400;font-size:30px;margin:0 0 8px;}
+.dlg{width:100%;max-width:440px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:28px;box-shadow:0 30px 70px -20px rgba(0,0,0,.7);}
+.dlg h3{font-family:var(--serif);font-weight:400;font-size:23px;margin:0 0 8px;}
+.dlg p{color:var(--soft);font-size:13.5px;margin:0 0 18px;line-height:1.5;}
+.dlg textarea{width:100%;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:12px;font-family:inherit;font-size:14px;color:var(--ink);resize:vertical;}
+.dlg textarea:focus{outline:none;border-color:var(--orange);}
+.dlg-act{display:flex;justify-content:flex-end;gap:10px;margin-top:20px;}
+.btn.danger{border-color:#C77;color:#C77;}
+.btn.danger:hover{background:#C77;color:#1b120a;}
+.pick{width:100%;max-width:480px;max-height:78vh;overflow-y:auto;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:26px;box-shadow:0 30px 70px -20px rgba(0,0,0,.7);}
+.pick h3{font-family:var(--serif);font-weight:400;font-size:22px;margin:0 0 4px;}
+.pick .sub{color:var(--muted);font-size:12px;margin-bottom:16px;}
+.pickrow{display:flex;align-items:center;gap:12px;padding:11px 8px;border-bottom:1px solid var(--line2);cursor:pointer;border-radius:4px;}
+.pickrow:hover{background:var(--orange-tint);}
+.pickrow .dot2{width:12px;height:12px;border-radius:50%;flex:0 0 auto;}
+.pickrow b{font-family:var(--serif);font-weight:500;font-size:15px;}
+.pickrow span{color:var(--muted);font-size:12px;}
+.pickrow .here{margin-left:auto;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);}.conn p{color:var(--soft);font-size:13.5px;margin:0 0 22px;}
+.conn label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:16px 0 6px;}
+
+.empty{color:var(--muted);font-size:14px;}
+.puploader{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:24px 0 14px;padding:22px;background:var(--surface);border:1px solid var(--line);border-radius:6px;}
+.puploader.drag{border-color:var(--orange);border-style:dashed;background:var(--orange-tint);}
+.prev{border-top:1px solid var(--orange);margin-top:8px;}
+.prev-h{display:grid;grid-template-columns:1fr 64px 90px 30px;gap:10px;padding:10px 0;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);}
+.prev-r{display:grid;grid-template-columns:1fr 64px 90px 30px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line2);}
+.prev-r span{display:flex;gap:8px;}
+.prev-r input{background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:8px 10px;font-family:inherit;font-size:13px;color:var(--ink);width:100%;}
+.prev-r input:focus{outline:none;border-color:var(--orange);}
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px 20px;margin-top:16px;}
+.pcard-h{font-size:16px;margin-bottom:12px;}.pcard-h b{font-family:var(--serif);font-weight:500;}.pcard-h i{color:var(--orange);font-style:italic;}
+.plist{display:flex;flex-direction:column;gap:2px;}
+.prow{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:4px;font-size:13.5px;color:var(--soft);}
+.prow b{margin-left:auto;font-family:var(--serif);font-size:16px;color:var(--ink);}
+.prow.best{background:var(--orange-tint);color:var(--ink);}
+.prow.best b{color:var(--orange);}
+.bestt{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange);border-radius:999px;padding:3px 8px;}
+.plists{display:flex;flex-direction:column;}
+.plrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 4px;border-bottom:1px solid var(--line);}
+.plrow b{font-family:var(--serif);font-weight:500;font-size:16px;display:block;}
+.plrow span{font-size:12px;color:var(--muted);}
+.plcard{background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:18px 20px;margin-bottom:16px;}
+.plcard-h{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-bottom:12px;margin-bottom:10px;border-bottom:1px solid var(--orange);}
+.plcard-h b{font-family:var(--serif);font-weight:500;font-size:17px;display:block;}
+.plcard-h span{font-size:12px;color:var(--muted);}
+.pltable{display:flex;flex-direction:column;}
+.pltr{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:8px 4px;border-bottom:1px solid var(--line2);font-size:13.5px;color:var(--soft);}
+.pltr:last-child{border-bottom:0;}
+.pltr i{color:var(--orange);font-style:italic;}
+.pltr b{font-family:var(--serif);color:var(--ink);white-space:nowrap;}
+.offbar{background:rgba(201,168,98,.12);border:1px solid var(--orange);color:var(--orange);padding:11px 16px;border-radius:6px;font-size:13px;margin-bottom:22px;}
+.dupwarn{background:rgba(201,168,98,.1);border:1px solid var(--orange);color:var(--orange);padding:10px 14px;border-radius:5px;font-size:12.5px;margin-bottom:16px;line-height:1.5;}
+.hchips{display:flex;flex-wrap:wrap;gap:10px;}
+.hchip{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:10px 16px;font-size:13px;color:var(--soft);}
+.hchip:hover{border-color:var(--orange);color:var(--orange);}
+.hchip b{font-family:var(--serif);font-size:16px;color:var(--orange);margin-right:4px;}
+.bkbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:40px;padding:16px 20px;background:var(--surface);border:1px dashed var(--line);border-radius:6px;font-size:13px;color:var(--soft);}
+.needtag{font-size:11px;letter-spacing:.06em;color:var(--orange);border:1px solid var(--orange);border-radius:999px;padding:5px 12px;}
+.tmap{margin-top:26px;}
+.tmap-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+.tmap-h span{font-family:var(--serif);font-size:17px;}
+.tmap-h b{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);}
+.tworld{width:100%;height:auto;display:block;}
+.tpin{cursor:pointer;}
+.tpin-pin{fill:var(--orange);stroke:#15100E;stroke-width:.25;filter:drop-shadow(0 .5px 1px rgba(0,0,0,.55));transition:fill .2s;}
+.tpin-hole{fill:#15100E;}
+.tpin-n{fill:#F0D784;font-size:1.7px;font-weight:700;font-family:var(--sans);pointer-events:none;}
+.tpin:hover .tpin-pin{fill:#E0C46A;}
+.tpin.on .tpin-pin{fill:#F0D784;filter:drop-shadow(0 0 2.2px rgba(201,168,98,.95));}
+.tpin.on{animation:tpinpulse 1.8s ease-in-out infinite;}
+@keyframes tpinpulse{0%,100%{opacity:1}50%{opacity:.6}}
+.cstamps{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px;}
+.cstamp{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:13px;color:var(--soft);}
+.cstamp:hover{border-color:var(--orange);color:var(--ink);}
+.cstamp.on{background:var(--orange);color:#1b120a;border-color:var(--orange);}
+.cstamp b{font-family:var(--serif);}
+.cs-flag{font-size:15px;}
+.cohead{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--orange);}
+.cohead b{font-family:var(--serif);font-size:20px;}
+.co-flag{font-size:20px;}
+.ttoggle{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;}
+.ttoggle button{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:12.5px;color:var(--soft);}
+.ttoggle button.on{background:var(--orange);color:#1b120a;border-color:var(--orange);}
+.tacc{display:flex;flex-direction:column;gap:10px;}
+.tacc-item{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;transition:border-color .2s;}
+.tacc-item.open{border-color:var(--orange);}
+.tacc-h{width:100%;display:flex;align-items:center;gap:14px;padding:13px 16px;background:none;border:none;text-align:left;color:var(--ink);}
+.tacc-th{width:38px;height:52px;flex:0 0 auto;border-radius:3px;overflow:hidden;background:var(--surface2);display:flex;align-items:center;justify-content:center;}
+.tacc-th img{width:100%;height:100%;object-fit:cover;}
+.tacc-th .none{color:var(--muted);font-size:16px;}
+.tacc-ti{flex:1;min-width:0;}
+.tacc-ti b{font-family:var(--serif);font-weight:500;font-size:15.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tacc-ti .wstar{color:var(--orange);font-style:normal;}
+.tacc-ti span{font-size:12.5px;color:var(--muted);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tacc-meta{flex:0 0 auto;font-size:14px;color:var(--soft);white-space:nowrap;}
+.tacc-meta .rt{color:var(--orange);font-style:normal;font-size:12px;letter-spacing:1px;}
+.tacc-cv{flex:0 0 auto;color:var(--muted);font-size:13px;transition:transform .2s;}
+.tacc-item.open .tacc-cv{transform:rotate(180deg);color:var(--orange);}
+.tacc-body{padding:4px 18px 20px;border-top:1px solid var(--line2);}
+.tacc-photo{margin:14px 0;border-radius:6px;overflow:hidden;max-width:200px;}
+.tacc-photo img{width:100%;display:block;}
+.tacc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;margin-top:14px;}
+.dp span{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.dp b{font-weight:400;font-size:14px;color:var(--ink);}
+.tacc-rate{display:flex;align-items:center;gap:12px;margin-top:16px;}
+.tacc-rate span{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.tacc-note{margin-top:14px;padding:12px 14px;background:var(--surface2);border-left:2px solid var(--orange);border-radius:0 5px 5px 0;font-style:italic;color:var(--soft);font-size:13.5px;}
+@media(max-width:520px){.tacc-grid{grid-template-columns:1fr;}}
+#toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--paper);padding:13px 22px;border-radius:999px;font-size:14px;font-family:var(--serif);z-index:90;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;box-shadow:0 14px 30px -10px rgba(0,0,0,.6);}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.cork{position:fixed;left:50%;bottom:80px;z-index:95;pointer-events:none;}
+.cork span{position:absolute;width:8px;height:8px;border-radius:50%;left:0;top:0;animation:burst .95s ease-out forwards;}
+@keyframes burst{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(.4);opacity:0}}
+.detail{display:grid;grid-template-columns:380px 1fr;gap:48px;margin-top:24px;align-items:start;}
+.detail-photo{position:sticky;top:96px;}
+.detail-photo img{width:100%;border-radius:6px;border:1px solid var(--line);}
+.dnone{width:100%;aspect-ratio:3/4;border:1px dashed var(--line);border-radius:6px;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;color:var(--muted);}
+.dnone span{font-family:var(--serif);font-size:48px;color:var(--line);}
+.detail-main .display em{font-style:italic;color:var(--orange);}
+.dtags{display:flex;flex-wrap:wrap;gap:7px;}
+.dgrid{margin-top:26px;border-top:1px solid var(--line);}
+.drow{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--line2);font-size:14px;}
+.drow span{color:var(--muted);}
+.drow b{font-weight:500;text-align:right;}
+.dnote{margin-top:22px;}
+.dnote span{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin-bottom:6px;}
+.dnote p{margin:0;font-family:var(--serif);font-style:italic;font-size:16px;color:var(--soft);}
+.dactions{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
+.posedit{margin-top:24px;padding-top:20px;border-top:1px solid var(--line2);}
+.posrow{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;}
+.posrow select,.posrow input{background:var(--paper);border:1px solid var(--line);border-radius:2px;padding:10px 12px;font-family:inherit;font-size:14px;color:var(--ink);}
+input,textarea,select{color:var(--ink);}
+input::placeholder,textarea::placeholder{color:var(--muted);}
+.posrow select{flex:1;min-width:160px;}.posrow input{width:120px;}
+@media(max-width:820px){.detail{grid-template-columns:1fr;gap:24px;}.detail-photo{position:static;}}
+
+/* ── sommelier chat ── */
+.fab{position:fixed;right:24px;bottom:24px;z-index:50;width:60px;height:60px;border-radius:50%;border:none;background:var(--orange);color:#1b120a;font-size:24px;box-shadow:0 10px 30px -6px rgba(201,168,98,.5);transition:transform .18s,background .18s;}
+.fab:hover{transform:scale(1.06);background:var(--orange-deep);}
+.fab.hide{transform:scale(0);pointer-events:none;}
+.chatwin{position:fixed;right:24px;bottom:24px;z-index:55;width:min(380px,calc(100vw - 32px));height:min(560px,calc(100vh - 48px));background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 60px -16px rgba(28,27,24,.4);display:flex;flex-direction:column;overflow:hidden;transform-origin:bottom right;animation:pop .22s cubic-bezier(.2,.8,.2,1);}
+@keyframes pop{from{opacity:0;transform:scale(.9) translateY(12px)}to{opacity:1;transform:none}}
+.chat-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line2);}
+.chat-hd .who{display:flex;align-items:center;gap:11px;}
+.chat-hd .av{width:34px;height:34px;border-radius:50%;background:var(--orange-tint);color:var(--orange);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:18px;}
+.chat-hd b{font-family:var(--serif);font-weight:500;font-size:17px;display:block;line-height:1;}
+.chat-hd span{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
+.chat-x{background:none;border:none;color:var(--muted);font-size:18px;}
+.chat-x:hover{color:var(--ink);}
+.chat-body{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px;}
+.msg{max-width:84%;padding:11px 14px;border-radius:14px;font-size:14px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word;}
+.msg.u{align-self:flex-end;background:var(--ink);color:var(--paper);border-bottom-right-radius:4px;}
+.msg.a{align-self:flex-start;background:var(--paper);color:#F6F1E8;border:1px solid var(--line);border-bottom-left-radius:4px;}
+.msg.typing{color:var(--muted);font-style:italic;}
+.chips-q{display:flex;flex-wrap:wrap;gap:7px;padding:0 18px 14px;}
+.chips-q button{border:1px solid var(--line);background:none;color:var(--soft);font-size:12px;padding:7px 12px;border-radius:999px;}
+.chips-q button:hover{border-color:var(--orange);color:var(--orange);}
+.chat-in{display:flex;gap:8px;padding:14px;border-top:1px solid var(--line2);}
+.chat-in textarea{flex:1;resize:none;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-family:inherit;font-size:14px;background:var(--paper);max-height:90px;color:#F6F1E8;}
+.chat-in textarea::placeholder{color:var(--muted);}
+.chat-in textarea:focus{outline:none;border-color:var(--orange);background:var(--surface2);}
+.chat-in button{border:none;background:var(--orange);color:#1b120a;width:42px;border-radius:10px;font-size:17px;}
+.chat-in button:hover{background:var(--orange-deep);}
+.chat-in button[disabled]{opacity:.5;}
+.chat-in{align-items:flex-end;}
+.chat-cam{background:none!important;border:1px solid var(--line)!important;color:var(--soft)!important;width:42px;height:42px;border-radius:10px;font-size:18px;flex:0 0 auto;}
+.chat-cam:hover{border-color:var(--orange)!important;color:var(--orange)!important;}
+.chat-pend{display:flex;align-items:center;gap:10px;padding:8px 14px 0;font-size:12px;color:var(--muted);}
+.chat-pend img{width:38px;height:38px;object-fit:cover;border-radius:6px;border:1px solid var(--line);}
+.chat-pend button{background:none;border:none;color:var(--muted);font-size:14px;width:auto;}
+.chat-pend button:hover{color:var(--orange);}
+.msgimg{display:block;width:100%;max-width:180px;border-radius:8px;margin-bottom:6px;}
+.winelink{color:var(--orange);text-decoration:underline;text-underline-offset:2px;cursor:pointer;font-weight:600;}
+.apprec{margin-top:22px;padding:18px 20px;background:var(--surface);border:1px solid var(--line);border-radius:8px;}
+.ac-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px;}
+.ac-h>span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.ac-fig{display:flex;align-items:baseline;gap:10px;}
+.ac-fig b{font-family:var(--serif);font-weight:500;font-size:19px;}
+.ac-fig span{font-size:13px;color:var(--soft);}
+.ac-fig .up,.ac-x .up{color:#86B37A;}.ac-fig .down,.ac-x .down{color:#C77;}
+.ac-svg{width:100%;height:96px;display:block;}
+.ac-area{fill:var(--orange-tint);}
+.ac-line{fill:none;stroke:var(--orange);stroke-width:1.6;vector-effect:non-scaling-stroke;stroke-linejoin:round;}
+.ac-dot{fill:#F0D784;stroke:#15100E;stroke-width:.5;}
+.ac-x{display:flex;justify-content:space-between;gap:10px;margin-top:8px;font-size:11px;color:var(--muted);}
+.ac-x span:nth-child(2){color:var(--soft);}
+.ac-note{font-size:11.5px;color:var(--muted);margin:8px 0 0;font-style:italic;}
+
+@media(max-width:820px){
+  .stats{grid-template-columns:1fr 1fr;}
+  .stat:nth-child(2){border-right:0;}
+  .stat{padding-bottom:18px;border-bottom:1px solid var(--line);}
+  .add{grid-template-columns:1fr;}
+  .drop{position:static;}
+  .grid2{grid-template-columns:1fr;}
+  .shelf{grid-template-columns:40px 1fr auto;gap:12px;}
+  .tr{grid-template-columns:2fr .6fr .6fr .8fr .3fr;}
+  .tr span:nth-child(3),.tr span:nth-child(5){display:none;}
+  .hd-in{padding:14px 18px;}
+  .wrap{padding:36px 18px 70px;}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<header class="hd"><div class="hd-in">
+  <div class="brand"><b>La Cave</b><span>Maison du Vin · Hier JC-366DZ</span></div>
+  <nav class="nav">
+    <button data-tab="atlas">Atlas</button>
+    <button data-tab="cellar">La Cave</button>
+    <button data-tab="add">Ajouter</button>
+    <button data-tab="all">Collection</button>
+    <button data-tab="tasted">Tasted</button>
+    <button data-tab="prices">Marché</button>
+    <button data-tab="journal">Journal</button>
+    <button class="gear" id="gsearch" title="ค้นหา" style="margin-right:6px">🔍</button>
+    <button class="gear" id="gear" title="Réglages">⚙</button>
+  </nav>
+</div></header>
+
+<main class="wrap" id="main"></main>
+<footer class="foot-note" id="foot">Conservé dans votre Google Sheet privé.</footer>
+<div id="ovl"></div>
+<div id="chat"></div>
+<div id="catip"></div>
+<div id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+const LS='lacave_cfg_v2';
+let CFG=JSON.parse(localStorage.getItem(LS)||'null');
+const YEAR=new Date().getFullYear();
+
+const SHELVES=[
+ {id:1,t:'Sparkling & White',th:'สปาร์กลิง & ไวน์ขาว'},
+ {id:2,t:'Sparkling & White',th:'สปาร์กลิง & ไวน์ขาว'},
+ {id:3,t:'Grand Vins',th:'ไวน์มูลค่าสูงสุด'},
+ {id:4,t:'Modern Era',th:'ไวน์สมัยใหม่'},
+ {id:5,t:'Old Vintages',th:'ไวน์ปีเก่า'},
+ {id:6,t:'Everyday',th:'ดื่มประจำวัน'},
+];
+const TYPE={sparkling:'Sparkling',white:'White',red:'Red',rose:'Rosé',dessert:'Dessert',fortified:'Fortified',orange:'Orange',other:'Other'};
+
+const FR=[
+ {k:'champagne',n:'Champagne',x:66,y:23,kw:['champagne','reims','épernay','epernay']},
+ {k:'alsace',n:'Alsace',x:81,y:30,kw:['alsace']},
+ {k:'loire',n:'Loire',x:35,y:46,kw:['loire','sancerre','pouilly-fum','vouvray','chinon','bourgueil','muscadet','saumur','anjou','savenni','touraine']},
+ {k:'bourgogne',n:'Bourgogne',x:67,y:46,kw:['burgundy','bourgogne','chablis','côte de nuits','cote de nuits','côte de beaune','cote de beaune','meursault','puligny','chassagne','gevrey','vosne','nuits-saint','pommard','volnay','mâcon','macon','mercurey','givry','montrachet']},
+ {k:'jura',n:'Jura',x:75,y:45,kw:['jura','arbois','château-chalon','chateau-chalon']},
+ {k:'beaujolais',n:'Beaujolais',x:67,y:54,kw:['beaujolais','morgon','fleurie','moulin-à-vent','brouilly','julién','juliena']},
+ {k:'savoie',n:'Savoie',x:78,y:55,kw:['savoie','savoy']},
+ {k:'rhone',n:'Rhône',x:69,y:61,kw:['rhône','rhone','châteauneuf','chateauneuf','hermitage','côte-rôtie','cote-rotie','condrieu','gigondas','vacqueyras','crozes','cornas','tavel','ventoux']},
+ {k:'provence',n:'Provence',x:77,y:66,kw:['provence','bandol','cassis','bellet']},
+ {k:'languedoc',n:'Languedoc-Roussillon',x:60,y:71,kw:['languedoc','roussillon','minervois','corbi','faug','picpoul','fitou','maury','banyuls','limoux','pic saint','saint-chinian']},
+ {k:'sudouest',n:'Sud-Ouest',x:40,y:68,kw:['sud-ouest','south west','cahors','madiran','gaillac','bergerac','juranç','juranc','marcillac','fronton','monbazillac','irouléguy']},
+ {k:'cognac',n:'Cognac',x:31,y:53,kw:['cognac','charente']},
+ {k:'corse',n:'Corse',x:89,y:76,kw:['corse','corsica','corsican','patrimonio','ajaccio','sciaccarellu','niellucciu','vermentinu','cap corse']},
+ {k:'bordeaux',n:'Bordeaux',x:30,y:59,kw:['bordeaux','médoc','medoc','saint-émilion','saint-emilion','st-émilion','st-emilion','pomerol','margaux','pauillac','pessac','léognan','leognan','graves','sauternes','listrac','moulis','fronsac','saint-julien','st-julien','saint-estèphe','estephe','barsac','entre-deux-mers']},
+];
+const FR_PATH='M60,9 L82,27 L79,40 L84,64 L71,71 L57,82 L33,77 L26,60 L24,50 L16,49 L8,42 L22,40 L36,29 Z';
+
+const REGION_INFO={
+ bordeaux:{soil:'กรวด ดินเหนียว และหินปูน',climate:'ภูมิอากาศแบบทะเล อบอุ่นชื้น',sun:'แดดปานกลาง ฤดูร้อนยาว',grapes:'Cabernet Sauvignon, Merlot, Cabernet Franc',notes:'แบล็คเคอแรนต์ ลูกพลัม ซีดาร์ ยาสูบ ดินสอ แทนนินแน่น เก็บบ่มได้นาน'},
+ bourgogne:{soil:'หินปูนและดินเหนียว (marl)',climate:'ภาคพื้นทวีป หนาวจัด-ร้อนสั้น',sun:'แดดจำกัด ทำให้กรดสดใส',grapes:'Pinot Noir, Chardonnay',notes:'เชอร์รีแดง ดอกไม้ เห็ดทรัฟเฟิล แร่ธาตุ เนื้อบางละเอียด สง่างาม'},
+ champagne:{soil:'ชอล์ก (หินปูนขาว) ลึก',climate:'เย็นที่สุดในฝรั่งเศส',sun:'แดดน้อย องุ่นกรดสูง',grapes:'Chardonnay, Pinot Noir, Pinot Meunier',notes:'แอปเปิล ขนมปังปิ้ง บริยอช ฟองละเอียด สดชื่น มีมิติ'},
+ rhone:{soil:'ก้อนกรวดกลม (galets), หินแกรนิต',climate:'เมดิเตอร์เรเนียน ลมมิสทรัล',sun:'แดดจัด สุกเต็มที่',grapes:'Syrah, Grenache, Mourvèdre, Viognier',notes:'พริกไทยดำ ผลไม้สุกเข้ม สมุนไพรการิก ช็อกโกแลต อบอุ่นเข้มข้น'},
+ loire:{soil:'หินปูนทูฟโฟ, หินชนวน, หินเหล็กไฟ',climate:'เย็นถึงปานกลาง ตามแม่น้ำ',sun:'แดดปานกลาง',grapes:'Sauvignon Blanc, Chenin Blanc, Cabernet Franc',notes:'ส้มเขียวหวาน ควินซ์ หญ้าสด แร่หินเหล็กไฟ กรดสดใส'},
+ alsace:{soil:'หินแกรนิต หินปูน ดินภูเขาไฟผสม',climate:'แห้ง มีเทือกเขาโวจส์กำบัง',sun:'แดดดี ฝนน้อย',grapes:'Riesling, Gewürztraminer, Pinot Gris',notes:'ลิ้นจี่ กุหลาบ น้ำผึ้ง ปิโตรล อะโรมาติกชัด หวานแห้งได้หลากหลาย'},
+ beaujolais:{soil:'หินแกรนิตสีชมพู',climate:'ภาคพื้นทวีปอบอุ่น',sun:'แดดดี',grapes:'Gamay',notes:'สตรอว์เบอร์รี ราสป์เบอร์รี ดอกไม้ แทนนินต่ำ ดื่มง่ายสดชื่น'},
+ provence:{soil:'หินปูน ดินทราย หินชนวน',climate:'เมดิเตอร์เรเนียนแท้ๆ',sun:'แดดจัดมาก',grapes:'Grenache, Cinsault, Mourvèdre',notes:'โรเซ่สีอ่อน สตรอว์เบอร์รี เปลือกส้ม สมุนไพร แห้งสะอาด'},
+ languedoc:{soil:'หินกรวด หินปูน หินชนวน',climate:'เมดิเตอร์เรเนียน ร้อนแห้ง',sun:'แดดจัด',grapes:'Carignan, Grenache, Syrah, Mourvèdre',notes:'ผลไม้สุกดำ การิก เครื่องเทศ คุ้มราคา เข้มข้นอบอุ่น'},
+ sudouest:{soil:'ดินเหนียวปูน กรวด',climate:'มหาสมุทรผสมทวีป',sun:'แดดดี',grapes:'Malbec, Tannat, Négrette',notes:'ลูกพลัมดำ แทนนินเข้ม สีเข้ม ดิบมีพลัง'},
+ jura:{soil:'ดินเหนียว marl สีเทา',climate:'ภาคพื้นทวีป เย็น',sun:'แดดน้อย',grapes:'Savagnin, Poulsard, Chardonnay',notes:'วอลนัท เคอร์รี แอปเปิลแห้ง ออกซิเดทีฟ (vin jaune) เอกลักษณ์จัด'},
+ savoie:{soil:'หินปูนเชิงเขาแอลป์',climate:'อัลไพน์ เย็น',sun:'แดดน้อย',grapes:'Jacquère, Mondeuse',notes:'ขาวเบาสดชื่น แร่ธาตุภูเขา ดอกไม้ขาว เหมาะคู่ฟองดูว์'},
+ cognac:{soil:'หินปูนชอล์ก',climate:'มหาสมุทรอบอุ่นชื้น',sun:'แดดปานกลาง',grapes:'Ugni Blanc (กลั่นเป็นบรั่นดี)',notes:'พื้นที่ผลิตคอนยัค ขาวกรดสูงเหมาะกลั่น'},
+ corse:{soil:'หินแกรนิต หินปูน หินชนวน เกาะกลางทะเล',climate:'เมดิเตอร์เรเนียน ลมทะเลแรง',sun:'แดดจัดเกือบทั้งปี',grapes:'Niellucciu, Sciaccarellu, Vermentinu',notes:'ผลไม้แดง สมุนไพรมากี เครื่องเทศ เกลือทะเล มี 9 AOC เด่นแถบ Patrimonio และ Ajaccio'},
+};
+
+const WORLD=[
+ {k:'fr',n:'France',la:46.6,lo:2.4,al:['france','français']},
+ {k:'it',n:'Italy',la:42.8,lo:12.8,al:['italy','ital','toscana','tuscany','piedmont','piemonte','veneto','barolo','chianti']},
+ {k:'es',n:'Spain',la:40,lo:-3.7,al:['spain','españa','espana','rioja','ribera','priorat']},
+ {k:'pt',n:'Portugal',la:39.5,lo:-8,al:['portugal','douro','porto']},
+ {k:'de',n:'Germany',la:51,lo:10.4,al:['germany','deutsch','mosel','rheingau']},
+ {k:'at',n:'Austria',la:47.6,lo:14.5,al:['austria','österreich','osterreich','wachau']},
+ {k:'hu',n:'Hungary',la:47.2,lo:19.4,al:['hungary','tokaj']},
+ {k:'gr',n:'Greece',la:39.1,lo:22.9,al:['greece','santorini']},
+ {k:'ch',n:'Switzerland',la:46.8,lo:8.2,al:['switzerland','suisse','schweiz']},
+ {k:'ro',n:'Romania',la:45.9,lo:24.9,al:['romania']},
+ {k:'us',n:'USA',la:37,lo:-120,al:['usa','united states','california','napa','sonoma','oregon','washington','america']},
+ {k:'ar',n:'Argentina',la:-32.9,lo:-68.8,al:['argentina','mendoza']},
+ {k:'cl',n:'Chile',la:-33.4,lo:-70.6,al:['chile']},
+ {k:'au',n:'Australia',la:-34.9,lo:138.6,al:['australia','barossa','mclaren','margaret river']},
+ {k:'nz',n:'New Zealand',la:-41.3,lo:174.8,al:['new zealand','marlborough']},
+ {k:'za',n:'South Africa',la:-33.9,lo:18.6,al:['south africa','stellenbosch']},
+ {k:'ca',n:'Canada',la:43.2,lo:-79.4,al:['canada','niagara','okanagan']},
+ {k:'lb',n:'Lebanon',la:33.9,lo:35.9,al:['lebanon','bekaa']},
+ {k:'ge',n:'Georgia',la:41.7,lo:44.8,al:['georgia','kakheti']},
+ {k:'il',n:'Israel',la:32.7,lo:35.1,al:['israel','galilee']},
+ {k:'jp',n:'Japan',la:35.7,lo:138.6,al:['japan','yamanashi']},
+ {k:'br',n:'Brazil',la:-29.2,lo:-51.5,al:['brazil']},
+ {k:'uy',n:'Uruguay',la:-34.5,lo:-56.2,al:['uruguay']},
+ {k:'gb',n:'England',la:51.2,lo:0.5,al:['england','united kingdom','sussex','kent']},
+];
+const CONT=['M3,7 L24,6 L33,12 L28,18 L21,19 L15,14 L11,9 Z',
+ 'M28,22 L40,26 L35,31 L31,39 L30,33 L28,26 Z',
+ 'M47,9 L58,8 L61,13 L54,14 L47,13 Z',
+ 'M46,16 L60,16 L64,22 L61,35 L55,35 L53,24 L46,21 Z',
+ 'M61,8 L78,5 L100,6 L90,13 L84,17 L78,23 L71,23 L67,18 L63,14 Z',
+ 'M81,28 L93,29 L92,36 L82,35 Z'];
+
+const st={wines:[],logs:[],tasted:[],prices:[],tab:'atlas',loaded:false,offline:false,openShelf:null,activeCab:1,mapMode:'fr',mapSel:null,detailId:null,detailFrom:'all',editing:false,editForm:null,colView:false,filt:{type:'',country:'',cab:'',ow:'',status:''},
+  add:{photo:null,thumb:null,status:'idle',err:'',bottles:[],saving:-1},
+  tadd:{photo:null,thumb:null,status:'idle',err:'',form:null},
+  padd:{status:'idle',err:'',rows:null,listName:'',fileLabel:''},
+  chat:{open:false,msgs:[],busy:false,img:null}};
+const CACHE='lacave_cache_v1';
+function saveCache(){try{localStorage.setItem(CACHE,JSON.stringify({wines:st.wines,logs:st.logs,tasted:st.tasted,prices:st.prices,at:Date.now()}));}catch(e){}}
+function loadCache(){try{const c=JSON.parse(localStorage.getItem(CACHE)||'null');if(c&&c.wines){st.wines=c.wines;st.logs=c.logs||[];st.tasted=c.tasted||[];st.prices=c.prices||[];return true;}}catch(e){}return false;}
+const NEW_WORLD=new Set(['us','ar','cl','au','nz','za','ca','jp','br','uy']);
+function oldNew(w){const k=countryOf(w);if(!k)return null;return NEW_WORLD.has(k)?'New World':'Old World';}
+const CAB_NAMES_LS='lacave_cabnames_v1';
+let CAB_NAMES=JSON.parse(localStorage.getItem(CAB_NAMES_LS)||'null')||{1:'Cave 1',2:'Cave 2',3:'Cave 3'};
+const CABINETS=[1,2,3];
+const cabOf=w=>num(w.cabinet)||1;
+function colorByType(t){return({red:'#7E1227',white:'#D8B45A',sparkling:'#E0CC7E',rose:'#E59C9C',dessert:'#B07A35',fortified:'#8A3417',orange:'#D9883A'}[t]||'#B8AE9C');}
+function saveCabNames(){localStorage.setItem(CAB_NAMES_LS,JSON.stringify(CAB_NAMES));}
+
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nid=()=>'w_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const imgSrc=w=>(w.photo&&String(w.photo).slice(0,5)==='data:')?w.photo:(w.photoId?'https://drive.google.com/thumbnail?id='+w.photoId+'&sz=w400':'');
+const num=v=>Number(v)||0;
+const isSoon=w=>num(w.quantity)>0&&(String(w.drinkSoon).toLowerCase()==='true'||w.drinkSoon===true||(w.yearsLeft!==''&&w.yearsLeft!=null&&num(w.yearsLeft)<=1));
+
+async function apiPost(b){const r=await fetch(CFG.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({token:CFG.token},b))});const j=await r.json();if(!j.ok)throw new Error(j.error||'failed');return j;}
+async function apiList(){const r=await fetch(CFG.url+'?action=list&token='+encodeURIComponent(CFG.token));const j=await r.json();if(!j.ok)throw new Error(j.error||'failed');return j;}
+async function load(){if(!st.wines.length)render();try{const j=await apiList();st.wines=j.wines||[];st.logs=j.logs||[];st.tasted=j.tasted||[];st.prices=j.prices||[];if(j.config&&j.config.cabNames){CABINETS.forEach(c=>{if(j.config.cabNames[c])CAB_NAMES[c]=j.config.cabNames[c];});saveCabNames();}st.offline=false;saveCache();}catch(e){if(!st.wines.length)loadCache();st.offline=true;}st.loaded=true;render();}
+
+function compress(file,max,q){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{let w=im.width,h=im.height;if(w>h&&w>max){h=Math.round(h*max/w);w=max;}else if(h>max){w=Math.round(w*max/h);h=max;}const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);res(c.toDataURL('image/jpeg',q));};im.onerror=rej;im.src=e.target.result;};r.onerror=rej;r.readAsDataURL(file);});}
+
+function frRegionOf(w){const hay=((w.region||'')+' '+(w.subRegion||'')+' '+(w.wineName||'')).toLowerCase();for(const r of FR){for(const k of r.kw){if(hay.includes(k))return r.k;}}return null;}
+function countryOf(w){const hay=((w.country||'')+' '+(w.region||'')+' '+(w.subRegion||'')).toLowerCase();for(const c of WORLD){for(const a of c.al){if(hay.includes(a))return c.k;}}return null;}
+function frCounts(){const m={};st.wines.forEach(w=>{const k=frRegionOf(w);if(k)m[k]=(m[k]||0)+num(w.quantity);});return m;}
+function worldCounts(){const m={};st.wines.forEach(w=>{const k=countryOf(w);if(k)m[k]=(m[k]||0)+num(w.quantity);});return m;}
+
+let _toastT;
+function toast(msg){const t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.classList.add('show');clearTimeout(_toastT);_toastT=setTimeout(()=>t.classList.remove('show'),2200);}
+function closeModal(){const o=document.getElementById('ovl');if(o)o.innerHTML='';}
+function askText(o){
+  const ov=document.getElementById('ovl');
+  ov.innerHTML=`<div class="ovl"><div class="dlg"><h3>${esc(o.title||'')}</h3>${o.desc?`<p>${esc(o.desc)}</p>`:''}
+    <textarea id="dlgin" rows="${o.rows||3}" placeholder="${esc(o.placeholder||'')}">${esc(o.value||'')}</textarea>
+    <div class="dlg-act"><button class="btn" id="dlgx">ยกเลิก</button><button class="btn fill" id="dlgok">${esc(o.ok||'ตกลง')}</button></div></div></div>`;
+  const inp=document.getElementById('dlgin');inp.focus();inp.setSelectionRange(inp.value.length,inp.value.length);
+  document.getElementById('dlgx').onclick=closeModal;
+  document.getElementById('dlgok').onclick=()=>{const v=inp.value;closeModal();o.onOk&&o.onOk(v);};
+}
+function confirmBox(o){
+  const ov=document.getElementById('ovl');
+  ov.innerHTML=`<div class="ovl"><div class="dlg"><h3>${esc(o.title||'')}</h3>${o.desc?`<p>${esc(o.desc)}</p>`:''}
+    <div class="dlg-act"><button class="btn" id="dlgx">ยกเลิก</button><button class="btn ${o.danger?'danger':'fill'}" id="dlgok">${esc(o.ok||'ยืนยัน')}</button></div></div></div>`;
+  document.getElementById('dlgx').onclick=closeModal;
+  document.getElementById('dlgok').onclick=()=>{closeModal();o.onOk&&o.onOk();};
+}
+
+function render(){
+  document.querySelectorAll('.nav button[data-tab]').forEach(b=>b.classList.toggle('on',b.dataset.tab===st.tab));
+  const m=document.getElementById('main');
+  if(!CFG){m.innerHTML='';connect(false);return;}
+  if(!st.loaded){m.innerHTML='<div class="sec" style="display:flex;align-items:center;gap:12px;color:var(--muted)"><span class="spin"></span> กำลังเปิดห้องไวน์…</div>';return;}
+  m.innerHTML={atlas:viewAtlas,cellar:viewCellar,add:viewAdd,all:viewAll,journal:viewJournal,detail:viewDetail,tasted:viewTasted,prices:viewPrices}[st.tab]();
+  if(st.offline)m.insertAdjacentHTML('afterbegin','<div class="offbar">⚠ ออฟไลน์ / เชื่อมต่อหลังบ้านไม่ได้ — กำลังแสดงข้อมูลล่าสุดที่บันทึกไว้ การแก้ไขอาจยังไม่ถูกบันทึก</div>');
+  bind();
+}
+
+function viewAtlas(){
+  const ws=st.wines;
+  if(!ws.length)return `<section class="sec"><div class="eyebrow">Bienvenue</div><h1 class="display">Une cave <em>vide</em>.</h1><p class="lede">เริ่มต้นด้วยการถ่ายรูปขวดแรก แล้วให้ผู้ช่วยอ่านฉลากกรอกข้อมูลให้</p><div style="margin-top:30px"><button class="btn fill" data-go="add">Ajouter une bouteille</button></div></section>`;
+  const total=ws.reduce((s,w)=>s+num(w.quantity),0);
+  const labels=ws.filter(w=>num(w.quantity)>0).length;
+  const countries=new Set(ws.map(countryOf).filter(Boolean)).size;
+  const regions=new Set(ws.map(frRegionOf).filter(Boolean)).size;
+  const soon=ws.filter(isSoon);
+  const invested=ws.reduce((s,w)=>s+num(w.price)*num(w.quantity),0);
+  return `<section class="sec">
+    <div class="eyebrow">La Collection</div>
+    <h1 class="display">L'<em>Atlas</em> du vin</h1>
+    <p class="lede">ภาพรวมคอลเลกชันของคุณ และต้นกำเนิดของไวน์แต่ละขวดบนแผนที่</p>
+    <div class="stats">
+      <div class="stat"><div class="n">${total}</div><div class="l">Bouteilles</div></div>
+      <div class="stat"><div class="n">${labels}</div><div class="l">Étiquettes</div></div>
+      <div class="stat"><div class="n">${countries||'—'}</div><div class="l">Pays</div></div>
+      <div class="stat"><div class="n">${regions||'—'}</div><div class="l">Régions FR</div></div>
+    </div>
+    ${invested?`<div class="invest">เงินลงทุนรวม (ตามราคาซื้อ) · <b>฿${invested.toLocaleString()}</b></div>`:''}
+    ${soon.length?`<div class="peak">
+      <div class="peak-h"><span>À boire · ควรเปิดเร็ว</span><span class="peak-n">${soon.length}</span></div>
+      <div class="peak-list">${soon.slice(0,8).map(w=>`<button class="peak-chip" data-shelf="${w.shelf}"><b>${esc(w.producer)||'—'}</b> ${esc(w.wineName)} <i>${w.vintage||'NV'}</i></button>`).join('')}</div>
+    </div>`:''}
+    <div class="atlas-head">
+      <h2>Origines</h2>
+      <div class="toggle"><button data-map="fr" class="${st.mapMode==='fr'?'on':''}">France</button><button data-map="world" class="${st.mapMode==='world'?'on':''}">Le Monde</button></div>
+    </div>
+    ${st.mapMode==='fr'?mapFrance():mapWorld()}
+    ${insights()}
+    ${healthBlock()}
+    ${backupBlock()}
+  </section>`;
+}
+function healthBlock(){
+  const live=st.wines.filter(w=>num(w.quantity)>0);
+  const noPhoto=live.filter(w=>!imgSrc(w)).length;
+  const noPrice=live.filter(w=>!num(w.price)).length;
+  const noSlot=live.filter(w=>!num(w.col)).length;
+  if(!noPhoto&&!noPrice&&!noSlot)return '';
+  const chip=(n,kind,label)=>n?`<button class="hchip" data-need="${kind}"><b>${n}</b> ${label}</button>`:'';
+  return `<div class="atlas-head" style="margin-top:54px"><h2>ความครบของข้อมูล</h2></div>
+    <p class="muted" style="font-size:13px;margin:0 0 14px">แตะเพื่อไปแก้ในหน้า Collection</p>
+    <div class="hchips">${chip(noPhoto,'nophoto','ยังไม่มีรูป')}${chip(noPrice,'noprice','ยังไม่ลงราคาซื้อ')}${chip(noSlot,'noslot','ยังไม่จัดช่อง')}</div>`;
+}
+function backupBlock(){
+  const last=Number(localStorage.getItem('lacave_lastbackup')||0);
+  const days=last?Math.floor((Date.now()-last)/86400000):999;
+  if(days<30)return '';
+  return `<div class="bkbar"><span>${last?('สำรองข้อมูลล่าสุด '+days+' วันก่อน'):'ยังไม่เคยสำรองข้อมูล'} — ควรกด Backup เก็บไฟล์ไว้</span><button class="btn" id="bknow">⤓ Backup เลย</button></div>`;
+}
+
+function bars(title,pairs,total){
+  if(!pairs.length)return '';
+  const max=Math.max(1,...pairs.map(p=>p[1]));
+  return `<div class="ins-col"><h4>${title}</h4>${pairs.map(([n,v])=>`<div class="ins-row"><span class="ins-l">${esc(n)}</span><span class="ins-t"><span class="ins-f" style="width:${v/max*100}%"></span></span><span class="ins-v">${v}</span></div>`).join('')}</div>`;
+}
+function insights(){
+  const ws=st.wines;
+  const byType={},byDec={};
+  ws.forEach(w=>{const q=num(w.quantity);
+    const t=TYPE[w.type]||'Other';byType[t]=(byType[t]||0)+q;
+    if(w.vintage){const d=Math.floor(num(w.vintage)/10)*10;if(d)byDec[d+'s']=(byDec[d+'s']||0)+q;}});
+  const types=Object.entries(byType).sort((a,b)=>b[1]-a[1]);
+  const decs=Object.entries(byDec).sort((a,b)=>a[0].localeCompare(b[0]));
+  if(!types.length)return '';
+  return `<div class="atlas-head" style="margin-top:54px"><h2>Aperçu</h2></div>
+    <div class="ins">${bars('ตามสไตล์ · Style',types)}${decs.length?bars('ตามทศวรรษ · Décennie',decs):''}</div>`;
+}
+
+function mapFrance(){
+  const c=frCounts();const max=Math.max(1,...Object.values(c));const sel=st.mapSel;
+  const dots=FR.map(r=>{const n=c[r.k]||0;if(!n)return '';const rad=1.6+Math.sqrt(n/max)*4.2;return `<circle class="dot-ring" cx="${r.x}" cy="${r.y}" r="${rad+2}"/><circle class="dot" cx="${r.x}" cy="${r.y}" r="${rad}" data-msel="${r.k}|${esc(r.n)}|${n}"/>`;}).join('');
+  const present=FR.filter(r=>c[r.k]).sort((a,b)=>c[b.k]-c[a.k]);
+  const chips=present.length?present.map(r=>`<button class="chip" data-msel="${r.k}|${esc(r.n)}|${c[r.k]}"><b>${esc(r.n)}</b><i>${c[r.k]}</i></button>`).join(''):'<span class="muted">ยังไม่มีไวน์ฝรั่งเศสที่ระบุภูมิภาคได้ — แตะจุดบนแผนที่เพื่อดูข้อมูล terroir</span>';
+  const allChips=FR.map(r=>`<button class="chip ${c[r.k]?'':'dim'}" data-msel="${r.k}|${esc(r.n)}|${c[r.k]||0}"><b>${esc(r.n)}</b>${c[r.k]?`<i>${c[r.k]}</i>`:''}</button>`).join('');
+  const info=sel&&REGION_INFO[sel.k];
+  return `<div class="mapcard">
+    ${sel?`<div class="mapsel"><b>${esc(sel.n)}</b>${sel.c&&sel.c!=='0'?' · '+sel.c+' ขวด':''}</div>`:''}
+    <svg viewBox="0 0 100 100" role="img" aria-label="Carte de France des vins">
+      <path class="fr-outline" d="${FR_PATH}"/>
+      <ellipse class="fr-outline" cx="89" cy="76" rx="3.4" ry="5.5"/>
+      ${FR.map(r=>{const n=c[r.k]||0;const has=n>0;const rad=has?(1.6+Math.sqrt(n/max)*4.2):1.5;return `${has?`<circle class="dot-ring" cx="${r.x}" cy="${r.y}" r="${rad+2}"/>`:''}<circle class="dot ${has?'':'empty'} ${sel&&sel.k===r.k?'asel':''}" cx="${r.x}" cy="${r.y}" r="${rad}" data-msel="${r.k}|${esc(r.n)}|${n}"/>`;}).join('')}
+    </svg>
+  </div>
+  ${info?`<div class="terroir">
+    <div class="terroir-h"><span class="eyebrow" style="margin:0">Terroir</span><h3>${esc(sel.n)}</h3></div>
+    <div class="terroir-grid">
+      <div><span>ดิน · Sol</span><p>${esc(info.soil)}</p></div>
+      <div><span>ภูมิอากาศ · Climat</span><p>${esc(info.climate)}</p></div>
+      <div><span>แสงแดด · Soleil</span><p>${esc(info.sun)}</p></div>
+      <div><span>องุ่นเด่น · Cépages</span><p>${esc(info.grapes)}</p></div>
+    </div>
+    <div class="terroir-notes"><span>เทสติ้งโน้ต · Profil</span><p>${esc(info.notes)}</p></div>
+  </div>`:''}
+  <div class="legend">${allChips}</div>`;
+}
+
+function mapWorld(){
+  const c=worldCounts();const max=Math.max(1,...Object.values(c));const sel=st.mapSel;
+  const px=lo=>(lo+180)/360*100, py=la=>(90-la)/180*50;
+  const dots=WORLD.map(co=>{const n=c[co.k]||0;if(!n)return '';const x=px(co.lo),y=py(co.la);const rad=.9+Math.sqrt(n/max)*2.6;return `<circle class="dot-ring" cx="${x}" cy="${y}" r="${rad+1.1}"/><circle class="dot" cx="${x}" cy="${y}" r="${rad}" data-msel="${co.k}|${esc(co.n)}|${n}"/>`;}).join('');
+  const grat=[10,20,30,40].map(y=>`<line class="grat" x1="0" y1="${y}" x2="100" y2="${y}"/>`).join('')+[20,40,60,80].map(x=>`<line class="grat" x1="${x}" y1="0" x2="${x}" y2="50"/>`).join('');
+  const present=WORLD.filter(co=>c[co.k]).sort((a,b)=>c[b.k]-c[a.k]);
+  const chips=present.length?present.map(co=>`<button class="chip" data-msel="${co.k}|${esc(co.n)}|${c[co.k]}"><b>${esc(co.n)}</b><i>${c[co.k]}</i></button>`).join(''):'<span class="muted">ยังระบุประเทศไม่ได้</span>';
+  return `<div class="mapcard">
+    ${sel?`<div class="mapsel"><b>${esc(sel.n)}</b> · ${sel.c} ขวด</div>`:''}
+    <svg viewBox="0 0 100 50" role="img" aria-label="Carte du monde des vins">
+      ${grat}
+      ${CONT.map(d=>`<path class="land" d="${d}"/>`).join('')}
+      ${dots}
+    </svg>
+  </div>
+  <div class="legend">${chips}</div>`;
+}
+
+function viewCellar(){
+  const cab=st.activeCab;
+  const ws=st.wines.filter(w=>num(w.quantity)>0&&cabOf(w)===cab);
+  const colorOf=t=>({red:'#7E1227',white:'#D8B45A',sparkling:'#E0CC7E',rose:'#E59C9C',dessert:'#B07A35',fortified:'#8A3417',orange:'#D9883A'}[t]||'#B8AE9C');
+  const PER=22;
+  const zones=SHELVES.map(s=>{
+    const list=ws.filter(w=>num(w.shelf)===s.id);
+    let n=Math.max(PER,...list.map(w=>num(w.col)||0),list.length);
+    n=Math.ceil(n/22)*22;
+    const slots=new Array(n).fill(null);
+    list.filter(w=>num(w.col)>=1&&num(w.col)<=n).forEach(w=>{const idx=num(w.col)-1;if(!slots[idx])slots[idx]=w;else{const f=slots.indexOf(null);if(f>-1)slots[f]=w;}});
+    list.filter(w=>!(num(w.col)>=1)).forEach(w=>{const f=slots.indexOf(null);if(f>-1)slots[f]=w;else slots.push(w);});
+    const cnt=list.reduce((a,w)=>a+num(w.quantity),0);
+    const cell=(w,i)=>w
+      ?`<button class="cc full${isSoon(w)?' peak':''}" data-open="${w.id}" data-tip="${esc((w.producer||'—')+' · '+(w.wineName||'')+' '+(w.vintage||'')+' — '+[w.region,w.country].filter(Boolean).join(', ')+(isSoon(w)?' · ⚠ ถึงพีค':'')+(num(w.quantity)>1?(' ×'+w.quantity):''))}" style="--c:${colorOf(w.type)}"></button>`
+      :`<button class="cc" data-place="${s.id}:${i+1}" title="วางขวดที่ช่องนี้"></button>`;
+    const pattern=[6,5,6,5];let idx=0,ri=0,cells='';
+    while(idx<slots.length){const cnt=pattern[ri%pattern.length];cells+=`<div class="czrow">${slots.slice(idx,idx+cnt).map((w,j)=>cell(w,idx+j)).join('')}</div>`;idx+=cnt;ri++;}
+    return `<div class="cz"><div class="cz-lab"><b>${s.id}</b> ${s.th} <i>${cnt}</i></div><div class="cz-slots">${cells}</div></div>`;
+  }).join('');
+  const totalCab=st.wines.filter(w=>cabOf(w)===cab).reduce((a,w)=>a+num(w.quantity),0);
+  return `<section class="sec">
+    <div class="eyebrow">Le Meuble · Hier JC-366DZ</div>
+    <h1 class="display">La <em>Cave</em></h1>
+    <div class="cabswitch">
+      ${CABINETS.map(c=>`<button class="cabtab ${cab===c?'on':''}" data-cab="${c}">${esc(CAB_NAMES[c]||('Cave '+c))}</button>`).join('')}
+      <button class="cabren" id="cabren" title="เปลี่ยนชื่อตู้">✎</button>
+    </div>
+    <p class="lede">${esc(CAB_NAMES[cab]||('Cave '+cab))} · ${totalCab} ขวด — วงกลมทึบคือขวดที่มี (แตะดูรายละเอียด) วงกลมจางคือช่องว่าง (แตะเพื่อเลือกขวดมาวาง)</p>
+    <div class="cab3">
+      <img class="cab3-img" src="cabinet.jpg" alt="Cave" onerror="this.style.display='none'">
+      <div class="cab3-ov">${zones}</div>
+    </div>
+    <div class="caleg">
+      ${Object.entries({red:'Red',white:'White',sparkling:'Sparkling',rose:'Rosé',dessert:'Dessert',fortified:'Fortified'}).map(([k,l])=>`<span class="legi"><span class="cc full" style="--c:${colorOf(k)};position:static;width:13px;height:13px"></span>${l}</span>`).join('')}
+    </div>
+  </section>`;
+}
+
+function cardHtml(w){
+  const age=w.vintage?YEAR-num(w.vintage):null;const tags=[];
+  if(w.type)tags.push(`<span class="tag">${TYPE[w.type]||w.type}</span>`);
+  const ow=oldNew(w);if(ow)tags.push(`<span class="tag ow">${ow}</span>`);
+  if(w.grape)tags.push(`<span class="tag">${esc(w.grape)}</span>`);
+  if(age!=null)tags.push(`<span class="tag">${age} ans</span>`);
+  if(isSoon(w))tags.push('<span class="tag o">À boire bientôt</span>');
+  return `<div class="card">
+    <div class="ph" data-open="${w.id}" style="cursor:pointer">${imgSrc(w)?`<img src="${imgSrc(w)}" loading="lazy" alt="">`:'<span class="none">✦</span>'}</div>
+    <div class="bd">
+      ${w.score?`<span class="score">${esc(w.score)}</span>`:''}
+      <div class="pr">${esc(w.producer)||'Producteur inconnu'}</div>
+      <div class="nm" data-open="${w.id}" style="cursor:pointer">${esc(w.wineName)||'—'} <i>${w.vintage||'NV'}</i></div>
+      <div class="me">${[w.region,w.subRegion,w.country].filter(Boolean).map(esc).join(' · ')}</div>
+      ${(w.price||w.marketPrice)?`<div class="prices">${w.price?`<span>ซื้อ <b>฿${num(w.price).toLocaleString()}</b></span>`:''}${w.marketPrice?`<span>ตลาด <b>${esc(w.marketPrice)}</b></span>`:''}</div>`:''}
+      <div class="tags">${tags.join('')}</div>
+      <div class="cact"><button data-drink="${w.id}">🍷 ดื่มแล้ว</button><button data-pair="${w.id}">🍴 จับคู่อาหาร</button></div>
+      <div class="foot"><div class="qty"><button data-q="-1" data-id="${w.id}">−</button><span>${w.quantity}</span><button data-q="1" data-id="${w.id}">+</button></div>
+      <button class="del" data-del="${w.id}">Retirer</button></div>
+    </div></div>`;
+}
+
+function emptyBottle(){return{producer:'',wineName:'',vintage:'',country:'',region:'',subRegion:'',grape:'',type:'red',score:'',yearsLeft:'',drinkSoon:false,shelf:3,quantity:1,price:'',marketPrice:'',notes:'',col:'',cabinet:1,boughtFrom:'',boughtAt:''};}
+function fldDate(label,bi,key){const v=esc(st.add.bottles[bi][key]);return `<div class="fld"><label>${label}</label><input type="date" value="${v}" data-bi="${bi}" data-f="${key}"></div>`;}
+
+function viewDetail(){
+  const w=st.wines.find(x=>x.id===st.detailId);
+  if(!w)return '<section class="sec"><button class="link" data-back="1">← กลับ</button><p class="empty" style="margin-top:20px">ไม่พบขวดนี้</p></section>';
+  if(st.editing&&st.editForm&&st.editForm.id===w.id)return editFormView();
+  const age=w.vintage?YEAR-num(w.vintage):null;
+  const shelf=SHELVES.find(s=>s.id===num(w.shelf));
+  const rk=frRegionOf(w);const info=rk&&REGION_INFO[rk];const rn=rk&&(FR.find(r=>r.k===rk)||{}).n;
+  const logs=(st.logs||[]).filter(l=>l.wineId===w.id);
+  const wn=(w.wineName||'').toLowerCase().trim();
+  const pm=wn?(st.prices||[]).filter(p=>(((p.producer||'')+' '+(p.wineName||'')).toLowerCase().includes(wn))).slice().sort((a,b)=>num(a.price)-num(b.price)):[];
+  const fmt=ts=>{const d=new Date(Number(ts));return isNaN(d)?'':d.toLocaleDateString('th-TH',{year:'numeric',month:'short',day:'numeric'});};
+  const row=(l,v)=>v?`<div class="drow"><span>${l}</span><b>${esc(v)}</b></div>`:'';
+  return `<section class="sec">
+    <button class="link" data-back="1">← ${st.detailFrom==='cellar'?'กลับไปตู้':'กลับไป Collection'}</button>
+    <div class="detail">
+      <div class="detail-photo">
+        ${imgSrc(w)?`<img src="${imgSrc(w)}" alt="">`:'<div class="dnone"><span>✦</span><small>ยังไม่มีรูป</small></div>'}
+        <input type="file" id="dfile" accept="image/*" style="display:none">
+        <button class="btn full" id="dpick" style="margin-top:14px">${imgSrc(w)?'เปลี่ยนรูป':'เพิ่มรูป (ถ่าย/อัปโหลด)'}</button>
+        <p class="muted" style="font-size:11.5px;text-align:center;margin:10px 0 0;line-height:1.5">รูปจะถูกย่อและฝังลง Sheet ของคุณ ไม่หายแน่นอน</p>
+      </div>
+      <div class="detail-main">
+        <div class="eyebrow" style="margin-bottom:10px">${esc(w.producer)||'Producteur inconnu'}</div>
+        <h1 class="display" style="font-size:clamp(32px,5vw,52px)">${esc(w.wineName)||'—'} <em>${w.vintage||'NV'}</em></h1>
+        <div class="dtags" style="margin-top:16px">
+          ${w.type?`<span class="tag o">${TYPE[w.type]||w.type}</span>`:''}
+          ${oldNew(w)?`<span class="tag ow">${oldNew(w)}</span>`:''}
+          ${w.score?`<span class="tag">Score ${esc(w.score)}</span>`:''}
+          ${age!=null?`<span class="tag">${age} ans</span>`:''}
+          ${isSoon(w)?'<span class="tag o">À boire bientôt</span>':(w.yearsLeft!==''&&w.yearsLeft!=null?`<span class="tag">เก็บได้อีก ~${esc(w.yearsLeft)} ปี</span>`:'')}
+        </div>
+        <div class="dgrid">
+          ${row('ประเทศ',w.country)}${row('ภูมิภาค',w.region)}${row('Sub-region',w.subRegion)}${row('องุ่น',w.grape)}
+          ${row('ชั้นจัดเก็บ',shelf?('Site '+shelf.id+' · '+shelf.th):('Site '+w.shelf))}${row('คงเหลือ',w.quantity+' ขวด')}
+          ${row('ราคาที่ซื้อ',w.price?('฿'+num(w.price).toLocaleString()):'')}${row('ราคาตลาดไทย ~',w.marketPrice)}
+          ${row('ซื้อจาก',w.boughtFrom)}${row('วันที่ซื้อ',fmtDate(w.boughtAt))}
+        </div>
+        ${apprecBlock(w,pm)}
+        ${w.notes?`<div class="dnote"><span>โน้ต</span><p>${esc(w.notes)}</p></div>`:''}
+        ${pm.length?`<div class="dnote"><span>ราคาที่เคยเจอ · Marché</span><div style="margin-top:6px">${pm.slice(0,5).map((p,i)=>`<div class="drow"><span>${esc(p.listName)}</span><b>฿${num(p.price).toLocaleString()}${i===0?' · ถูกสุด':''}</b></div>`).join('')}</div></div>`:''}
+        <div class="dactions">
+          <button class="btn fill" data-drink="${w.id}">🍷 ดื่มแล้ว (−1)</button>
+          <button class="btn" data-edit="${w.id}">✎ แก้ไข</button>
+          <button class="btn" data-dup="${w.id}">⧉ ทำซ้ำขวดนี้</button>
+          <button class="btn" data-pair="${w.id}">🍴 จับคู่อาหาร</button>
+          <button class="btn" data-similar="${w.id}">🔎 ไวน์ใกล้เคียง (AI)</button>
+          <button class="btn" data-del="${w.id}">ลบ</button>
+        </div>
+        <div class="posedit">
+          <span class="eyebrow" style="margin:0">ตำแหน่งในตู้</span>
+          <div class="posrow">
+            <select id="pcab">${CABINETS.map(c=>`<option value="${c}" ${cabOf(w)===c?'selected':''}>${esc(CAB_NAMES[c]||('Cave '+c))}</option>`).join('')}</select>
+            <select id="pshelf">${SHELVES.map(s=>`<option value="${s.id}" ${num(w.shelf)===s.id?'selected':''}>Site ${s.id} · ${s.th}</option>`).join('')}</select>
+            <input id="pcol" type="number" min="1" placeholder="ช่อง (slot)" value="${esc(w.col)}">
+            <button class="btn" id="psave">บันทึก</button>
+          </div>
+        </div>
+        ${info?`<div class="terroir" style="margin-top:30px">
+          <div class="terroir-h"><span class="eyebrow" style="margin:0">Terroir · ${esc(rn)}</span></div>
+          <div class="terroir-grid">
+            <div><span>ดิน</span><p>${esc(info.soil)}</p></div><div><span>ภูมิอากาศ</span><p>${esc(info.climate)}</p></div>
+            <div><span>แสงแดด</span><p>${esc(info.sun)}</p></div><div><span>องุ่นเด่น</span><p>${esc(info.grapes)}</p></div>
+          </div>
+          <div class="terroir-notes"><span>โปรไฟล์รสชาติของภูมิภาค</span><p>${esc(info.notes)}</p></div>
+        </div>`:''}
+        ${logs.length?`<div style="margin-top:30px"><div class="eyebrow">ประวัติการดื่ม</div>${logs.map(l=>`<div class="drow"><span>${fmt(l.ts)}</span><b>${esc(l.note)||'—'}</b></div>`).join('')}</div>`:''}
+      </div>
+    </div>
+  </section>`;
+}
+function viewAdd(){
+  const a=st.add;const show=a.status==='review';
+  return `<section class="sec">
+    <div class="eyebrow">Cataloguer</div>
+    <h1 class="display">Ajouter une <em>bouteille</em></h1>
+    <p class="lede">ถ่ายหรืออัปโหลดรูปฉลาก ถ้ามีหลายขวดในรูปเดียว ผู้ช่วยจะอ่านให้ครบทุกขวด คุณตรวจแก้แล้วบันทึกเข้าตู้ รูปเก็บบน Google Drive</p>
+    <div class="add">
+      <div class="drop">
+        ${a.photo?`<img src="${a.photo}" alt="">`:'<div class="ph0"><b>✦</b><div>ยังไม่มีรูป</div></div>'}
+        <input type="file" id="file" accept="image/*" style="display:none">
+        <button class="btn fill full" id="pick">${a.photo?'เปลี่ยนรูป':'📷 ถ่าย / เลือกรูปจากเครื่อง'}</button>
+        ${a.status==='reading'?'<div class="reading"><span class="spin"></span>กำลังอ่านฉลาก…</div>':''}
+        ${a.err?`<div class="warn">${esc(a.err)}</div>`:''}
+        ${a.status==='idle'?'<button class="link" id="manual">หรือกรอกเองโดยไม่มีรูป →</button>':''}
+        ${show&&a.bottles.length>1?`<div class="conf">พบ ${a.bottles.length} ขวดในรูปนี้</div>`:''}
+      </div>
+      ${show?`<div>
+        <div class="review-top"><h3>${a.bottles.length>1?a.bottles.length+' bouteilles détectées':'Vérifier les détails'}</h3>${a.bottles.length>1?'<button class="btn fill" id="saveall">บันทึกทั้งหมด</button>':''}</div>
+        ${a.bottles.map((b,i)=>bottleForm(b,i,a.bottles.length)).join('')}
+      </div>`:''}
+    </div></section>`;
+}
+function fld(label,bi,key,ph,ta){const v=esc(st.add.bottles[bi][key]);return `<div class="fld"><label>${label}</label>${ta?`<textarea rows="2" data-bi="${bi}" data-f="${key}" placeholder="${ph||''}">${v}</textarea>`:`<input value="${v}" data-bi="${bi}" data-f="${key}" placeholder="${ph||''}">`}</div>`;}
+function sel(label,bi,key,opts){return `<div class="fld"><label>${label}</label><select data-bi="${bi}" data-f="${key}">${opts.map(([val,l])=>`<option value="${val}" ${String(st.add.bottles[bi][key])===String(val)?'selected':''}>${l}</option>`).join('')}</select></div>`;}
+function bottleForm(b,i,n){
+  const bn=(b.wineName||'').toLowerCase().trim();
+  const dup=bn?st.wines.find(w=>(w.wineName||'').toLowerCase().trim()===bn&&String(w.vintage||'')===String(b.vintage||'')):null;
+  return `<div class="bform">
+    ${n>1?`<div class="bh"><div class="ix">Bouteille <span>${i+1}</span> / ${n}</div><button class="del" data-rmb="${i}">เอาออก</button></div>`:''}
+    ${dup?`<div class="dupwarn">⚠ มีขวดนี้อยู่แล้วในคลัง (${dup.quantity} ขวด · Site ${dup.shelf}) — ถ้าซื้อมาเพิ่มของเดิม แนะนำกด + ที่ขวดเดิมแทน</div>`:''}
+    <div class="grid2">${fld('Producer',i,'producer')}${fld('Wine / Label',i,'wineName')}</div>
+    <div class="grid2" style="margin-top:14px">${fld('Vintage',i,'vintage','2015 / ว่าง = NV')}${fld('Score / 100',i,'score')}</div>
+    <div class="grid2" style="margin-top:14px">${fld('Country',i,'country')}${fld('Region / Appellation',i,'region')}</div>
+    <div class="grid2" style="margin-top:14px">${fld('Sub-region',i,'subRegion')}${fld('Grape / Blend',i,'grape')}</div>
+    <div class="grid2" style="margin-top:14px">${sel('Style',i,'type',Object.entries(TYPE))}${fld('ราคาที่ซื้อมา (บาท)',i,'price')}</div>
+    <div class="grid2" style="margin-top:14px">${fld('ราคาตลาดไทย ~ (AI ประเมิน)',i,'marketPrice','เช่น 1,800-2,500 THB')}${fld('เก็บได้อีก (ปี)',i,'yearsLeft')}</div>
+    <div class="grid2" style="margin-top:14px">${fld('จำนวนขวด',i,'quantity')}${sel('ชั้นจัดเก็บ',i,'shelf',SHELVES.map(s=>[s.id,'Site '+s.id+' · '+s.th]))}</div>
+    <div class="grid2" style="margin-top:14px">${sel('ตู้ (Cave)',i,'cabinet',CABINETS.map(c=>[c,CAB_NAMES[c]||('Cave '+c)]))}${fld('ช่องในชั้น (slot) — เว้นว่าง = จัดอัตโนมัติ',i,'col')}</div>
+    <div class="grid2" style="margin-top:14px">${fld('ซื้อจากที่ไหน',i,'boughtFrom','ร้าน / ดีลเลอร์ / ทริป')}${fldDate('วันที่ซื้อ',i,'boughtAt')}</div>
+    <label class="chk"><input type="checkbox" data-bi="${i}" data-soon="1" ${b.drinkSoon?'checked':''}><span>ถึงพีคแล้ว — ควรรีบดื่ม</span></label>
+    <div class="fld" style="margin-top:14px">${fld('โน้ต',i,'notes','',true)}</div>
+    ${n===1?`<button class="btn fill full" id="save1" style="margin-top:18px">เก็บเข้าตู้</button>`:`<button class="btn full" data-save1="${i}" style="margin-top:16px">บันทึกขวดนี้</button>`}
+  </div>`;
+}
+
+let sortK='recent',q='';
+function tEmpty(){return{producer:'',wineName:'',vintage:'',country:'',region:'',grape:'',type:'red',marketPrice:'',rating:0,wishlist:false,where:'',note:''};}
+function stars(n,attr){n=Number(n)||0;let s='';for(let i=1;i<=5;i++)s+=`<button class="star ${i<=n?'on':''}" ${attr}="${i}">★</button>`;return s;}
+function viewTasted(){
+  const t=st.tadd;const adding=t.status==='reading'||t.status==='review';
+  const list=st.tasted||[];
+  if(adding){
+    const f=t.form||tEmpty();
+    return `<section class="sec">
+      <div class="eyebrow">Dégusté ailleurs</div>
+      <h1 class="display">เพิ่มไวน์ที่<em>เคยดื่ม</em></h1>
+      <div class="add">
+        <div class="drop">
+          ${t.photo?`<img src="${t.photo}" alt="">`:'<div class="ph0"><b>✦</b><div>ยังไม่มีรูป</div></div>'}
+          <input type="file" id="tfile" accept="image/*" style="display:none">
+          <button class="btn fill full" id="tpick">${t.photo?'เปลี่ยนรูป':'📷 ถ่าย / เลือกรูปจากเครื่อง'}</button>
+          ${t.status==='reading'?'<div class="reading"><span class="spin"></span>กำลังอ่านฉลาก…</div>':''}
+          ${t.err?`<div class="warn">${esc(t.err)}</div>`:''}
+          <button class="link" id="tcancel">ยกเลิก</button>
+        </div>
+        ${t.status==='review'?`<div class="bform">
+          ${(t.queue&&t.queue.length)?`<div class="dupwarn" style="color:var(--ink);border-color:var(--orange)">พบหลายขวดในรูป — กรอกขวดนี้แล้วกดบันทึก ระบบจะพาไปขวดถัดไป (เหลืออีก ${t.queue.length})</div>`:''}
+          <div class="grid2">${tfld('Producer','producer')}${tfld('Wine / Label','wineName')}</div>
+          <div class="grid2" style="margin-top:14px">${tfld('Vintage','vintage')}${tsel('Style','type',Object.entries(TYPE))}</div>
+          <div class="grid2" style="margin-top:14px">${tfld('Country','country')}${tfld('Region','region')}</div>
+          <div class="grid2" style="margin-top:14px">${tfld('Grape','grape')}${tfld('ราคาตลาด ~','marketPrice')}</div>
+          <div class="fld" style="margin-top:14px"><label>ดื่มที่ไหน / กับใคร</label><input value="${esc(f.where)}" data-tf="where"></div>
+          <div class="fld" style="margin-top:14px"><label>ชอบแค่ไหน</label><div class="starrow">${stars(f.rating,'data-tfrate')}</div></div>
+          <label class="chk"><input type="checkbox" id="twish" ${f.wishlist?'checked':''}><span>⭑ อยากซื้อมาเก็บ (wishlist)</span></label>
+          <div class="fld" style="margin-top:14px"><label>โน้ตรสชาติ</label><textarea rows="2" data-tf="note">${esc(f.note)}</textarea></div>
+          <button class="btn fill full" id="tsave" style="margin-top:18px">บันทึกเข้าลิสต์</button>
+        </div>`:''}
+      </div></section>`;
+  }
+  const wish=list.filter(x=>x.wishlist);
+  const counts={};list.forEach(x=>{const k=countryOf(x);if(k)counts[k]=(counts[k]||0)+1;});
+  const present=WORLD.filter(co=>counts[co.k]).sort((a,b)=>counts[b.k]-counts[a.k]);
+  const unknown=list.filter(x=>!countryOf(x)).length;
+  let shown=tfilt==='wish'?wish:(tfilt==='drunk'?list.filter(x=>!x.wishlist):list);
+  if(tcountry)shown=shown.filter(x=>countryOf(x)===tcountry);
+  const selCo=tcountry?WORLD.find(c=>c.k===tcountry):null;
+  return `<section class="sec">
+    <div class="eyebrow">${list.length} Dégustations</div>
+    <h1 class="display">เคย<em>ดื่ม</em></h1>
+    <p class="lede">แผนที่นักดื่ม — ประเทศไหนเคยดื่มจะมีหมุดทองเรืองแสง (ยิ่งดื่มเยอะหมุดยิ่งใหญ่) แตะหมุดหรือประเทศเพื่อดูไวน์</p>
+    ${present.length?`<div class="mapcard tmap">
+      <div class="tmap-h"><span>🗺 พาสปอร์ตนักดื่ม</span><b>${present.length} ประเทศ · ${list.length} ขวด</b></div>
+      ${tWorldMap(counts,present)}
+      <div class="cstamps">${present.map(co=>`<button class="cstamp${tcountry===co.k?' on':''}" data-tcsel="${co.k}"><span class="cs-flag">${flagOf(co.k)}</span><span class="cs-n">${esc(co.n)}</span><b>${counts[co.k]}</b></button>`).join('')}${unknown?`<span class="muted" style="align-self:center;font-size:12px">+${unknown} ยังไม่ระบุประเทศ</span>`:''}</div>
+    </div>`:''}
+    <div style="margin:26px 0 18px"><button class="btn fill" id="taddbtn">＋ เพิ่มไวน์ที่เคยดื่ม</button></div>
+    ${selCo?`<div class="cohead"><div><span class="co-flag">${flagOf(selCo.k)}</span> <b>${esc(selCo.n)}</b> · ${counts[selCo.k]} ขวด</div><button class="link" id="tcoclear">← ดูทุกประเทศ</button></div>`:`<div class="ttoggle">
+      <button class="${tfilt==='all'?'on':''}" data-tfil="all">ทั้งหมด ${list.length}</button>
+      <button class="${tfilt==='wish'?'on':''}" data-tfil="wish">⭑ อยากซื้อ ${wish.length}</button>
+      <button class="${tfilt==='drunk'?'on':''}" data-tfil="drunk">ดื่มแล้ว ${list.length-wish.length}</button>
+    </div>`}
+    ${shown.length?`<div class="tacc">${shown.map(tCard).join('')}</div>`:'<p class="empty">ยังไม่มีรายการในหมวดนี้</p>'}
+  </section>`;
+}
+function flagOf(k){return ({fr:'🇫🇷',it:'🇮🇹',es:'🇪🇸',us:'🇺🇸',au:'🇦🇺',ar:'🇦🇷',cl:'🇨🇱',de:'🇩🇪',pt:'🇵🇹',nz:'🇳🇿',za:'🇿🇦',at:'🇦🇹',jp:'🇯🇵',br:'🇧🇷',uy:'🇺🇾',ca:'🇨🇦',gr:'🇬🇷',hu:'🇭🇺',ge:'🇬🇪',lb:'🇱🇧',ch:'🇨🇭',th:'🇹🇭'}[k]||'🍷');}
+function tWorldMap(counts,present){
+  const max=Math.max(1,...present.map(co=>counts[co.k]));
+  const px=lo=>(lo+180)/360*100, py=la=>(90-la)/180*50;
+  const grat=[10,20,30,40].map(y=>`<line class="grat" x1="0" y1="${y}" x2="100" y2="${y}"/>`).join('')+[20,40,60,80].map(x=>`<line class="grat" x1="${x}" y1="0" x2="${x}" y2="50"/>`).join('');
+  const pins=present.map(co=>{const n=counts[co.k];const x=px(co.lo),y=py(co.la);const on=tcountry===co.k;
+    const H=4+Math.sqrt(n/max)*4.4;const k=H/22;const tx=x-12*k,ty=y-22*k;const cyh=y-13*k;
+    return `<g class="tpin${on?' on':''}" data-tcsel="${co.k}"><title>${esc(co.n)} · ${n} ขวด</title>`+
+      `<path class="tpin-pin" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" transform="translate(${tx.toFixed(2)} ${ty.toFixed(2)}) scale(${k.toFixed(3)})"/>`+
+      `<circle class="tpin-hole" cx="${x.toFixed(2)}" cy="${cyh.toFixed(2)}" r="${(2.5*k).toFixed(2)}"/>`+
+      `<text class="tpin-n" x="${x.toFixed(2)}" y="${cyh.toFixed(2)}" text-anchor="middle" dominant-baseline="central">${n}</text></g>`;
+  }).join('');
+  return `<svg viewBox="0 0 100 50" class="tworld" role="img" aria-label="แผนที่ประเทศที่เคยดื่ม">${grat}${CONT.map(d=>`<path class="land" d="${d}"/>`).join('')}${pins}</svg>`;
+}
+function tfld(label,key){return `<div class="fld"><label>${label}</label><input value="${esc((st.tadd.form||{})[key]||'')}" data-tf="${key}"></div>`;}
+function tsel(label,key,opts){const v=(st.tadd.form||{})[key];return `<div class="fld"><label>${label}</label><select data-tf="${key}">${opts.map(([val,l])=>`<option value="${val}" ${String(v)===String(val)?'selected':''}>${l}</option>`).join('')}</select></div>`;}
+function tCard(x){
+  const open=texpand===x.id;
+  const fl=flagOf(countryOf(x)||'');
+  const rateTxt='★'.repeat(Number(x.rating)||0);
+  return `<div class="tacc-item${open?' open':''}">
+    <button class="tacc-h" data-texp="${x.id}">
+      <span class="tacc-th">${imgSrc(x)?`<img src="${imgSrc(x)}" loading="lazy" alt="">`:'<span class="none">✦</span>'}</span>
+      <span class="tacc-ti">
+        <b>${esc(x.producer)||'—'} ${x.wishlist?'<i class="wstar">⭑</i>':''}</b>
+        <span>${esc(x.wineName)||'—'} · ${x.vintage||'NV'}</span>
+      </span>
+      <span class="tacc-meta">${fl}${rateTxt?` <i class="rt">${rateTxt}</i>`:''}</span>
+      <span class="tacc-cv">▾</span>
+    </button>
+    ${open?`<div class="tacc-body">
+      ${imgSrc(x)?`<div class="tacc-photo"><img src="${imgSrc(x)}" alt=""></div>`:''}
+      <div class="tacc-grid">
+        ${dpair('ภูมิภาค',[x.region,x.country].filter(Boolean).join(', '))}
+        ${dpair('องุ่น',x.grape)}
+        ${dpair('สไตล์',TYPE[x.type]||x.type)}
+        ${dpair('ดื่มที่ไหน / กับใคร',x.where)}
+        ${dpair('ราคาตลาด ~',x.marketPrice)}
+      </div>
+      <div class="tacc-rate"><span>ให้คะแนน</span><div class="starrow">${stars(x.rating,'data-trate="'+x.id+'" data-n')}</div></div>
+      ${x.note?`<div class="tacc-note">"${esc(x.note)}"</div>`:''}
+      <div class="cact" style="margin-top:14px"><button data-tbuy="${x.id}">＋ เข้าคลัง</button><button data-twish="${x.id}">${x.wishlist?'★ อยากซื้อแล้ว':'☆ อยากซื้อ'}</button><button data-tdel="${x.id}">ลบ</button></div>
+    </div>`:''}
+  </div>`;
+}
+function dpair(l,v){return v?`<div class="dp"><span>${esc(l)}</span><b>${esc(v)}</b></div>`:'';}
+async function onTFile(input){
+  const f=input.files&&input.files[0];if(!f)return;
+  st.tadd.status='reading';st.tadd.err='';render();
+  try{
+    st.tadd.photo=await compress(f,900,0.75);st.tadd.thumb=await compress(f,300,0.5);
+    const forAI=await compress(f,1200,0.8);
+    const mk=ai=>({...tEmpty(),producer:ai.producer||'',wineName:ai.wineName||'',vintage:ai.vintage==null?'':String(ai.vintage),country:ai.country||'',region:ai.region||'',grape:ai.grape||'',type:ai.type||'red',marketPrice:ai.marketPrice||''});
+    try{const r=await apiPost({action:'readLabel',image:forAI});
+      const arr=((r.data&&r.data.bottles)||(r.data?[r.data]:[])).filter(Boolean);
+      const forms=(arr.length?arr:[{}]).map(mk);
+      st.tadd.form=forms[0];st.tadd.queue=forms.slice(1);
+    }catch(e){st.tadd.form=tEmpty();st.tadd.queue=[];st.tadd.err='อ่านฉลากไม่สำเร็จ กรอกเองได้เลย';}
+    st.tadd.status='review';
+  }catch(e){st.tadd.status='idle';st.tadd.err='เปิดรูปไม่สำเร็จ';}
+  render();
+}
+async function saveTasted(){
+  const f=st.tadd.form;const item={id:nid(),producer:f.producer,wineName:f.wineName,vintage:f.vintage?Number(f.vintage):'',country:f.country,region:f.region,grape:f.grape,type:f.type,rating:Number(f.rating)||0,wishlist:!!f.wishlist,where:f.where,note:f.note,marketPrice:f.marketPrice||'',photo:'',addedAt:Date.now()};
+  const btn=document.getElementById('tsave');if(btn){btn.disabled=true;btn.textContent='กำลังบันทึก…';}
+  try{const r=await apiPost({action:'tastedAdd',item,image:st.tadd.thumb});st.tasted.unshift(r.item);saveCache();
+    const q=st.tadd.queue||[];
+    if(q.length){const next=q.shift();st.tadd.form=next;st.tadd.status='review';toast('บันทึกแล้ว · เหลืออีก '+(q.length+1)+' ขวด');render();}
+    else{st.tadd={photo:null,thumb:null,status:'idle',err:'',form:null,queue:[]};toast('บันทึกเข้าลิสต์แล้ว');render();}
+  }
+  catch(e){toast('บันทึกไม่สำเร็จ: '+e.message);if(btn){btn.disabled=false;btn.textContent='ลองอีกครั้ง';}}
+}
+async function tUpdate(x){try{await apiPost({action:'tastedUpdate',item:x});}catch(e){toast('อัปเดตไม่สำเร็จ');}}
+function tRate(id,n){const x=st.tasted.find(i=>i.id===id);if(!x)return;x.rating=Number(n);render();tUpdate(x);}
+function tWish(id){const x=st.tasted.find(i=>i.id===id);if(!x)return;x.wishlist=!x.wishlist;render();tUpdate(x);}
+function tDel(id){
+  confirmBox({title:'ลบรายการนี้?',danger:true,ok:'ลบ',onOk:async()=>{
+    const i=st.tasted.findIndex(x=>x.id===id);const bk=st.tasted[i];st.tasted=st.tasted.filter(x=>x.id!==id);render();
+    try{await apiPost({action:'tastedDelete',id});saveCache();}catch(e){st.tasted.splice(i,0,bk);render();toast('ลบไม่สำเร็จ');}
+  }});
+}
+async function tBuy(id){
+  const x=st.tasted.find(i=>i.id===id);if(!x)return;
+  const wine={id:nid(),producer:x.producer,wineName:x.wineName,vintage:x.vintage?Number(x.vintage):'',country:x.country,region:x.region,subRegion:'',grape:x.grape,type:x.type,score:'',yearsLeft:'',drinkSoon:false,shelf:3,quantity:1,price:'',marketPrice:x.marketPrice||'',notes:x.note?('จาก Tasted: '+x.note):'',photo:x.photo||'',photoId:'',addedAt:Date.now(),row:'',col:'',cabinet:1};
+  toast('กำลังเพิ่มเข้าคลัง…');
+  try{const r=await apiPost({action:'add',wine,image:x.photo||''});st.wines.unshift(r.wine||wine);saveCache();toast('เพิ่มเข้าคลังแล้ว · จัดชั้น/ราคาได้ในรายละเอียด');openDetail((r.wine||wine).id);}
+  catch(e){toast('เพิ่มไม่สำเร็จ: '+e.message);}
+}
+function viewJournal(){
+  const logs=st.logs||[];
+  const fmt=ts=>{const d=new Date(Number(ts));return isNaN(d)?'':d.toLocaleDateString('th-TH',{year:'numeric',month:'short',day:'numeric'});};
+  return `<section class="sec">
+    <div class="eyebrow">${logs.length} Dégustations</div>
+    <h1 class="display">Le <em>Journal</em></h1>
+    <p class="lede">บันทึกการดื่ม — กด "ดื่มแล้ว" ที่การ์ดไวน์ ระบบจะลดจำนวนขวดและบันทึกที่นี่</p>
+    ${logs.length?'<div style="margin:20px 0"><button class="btn fill" id="monthsum">✦ สรุปเดือนนี้โดย Léon</button></div>':''}
+    ${logs.length?`<div class="jlist">${logs.map(l=>`<div class="jrow">
+      <div class="jdate">${fmt(l.ts)}</div>
+      <div class="jwine"><b>${esc(l.producer)||'—'}</b> ${esc(l.wineName)} <span class="muted">${l.vintage||'NV'}</span></div>
+      <div class="jnote">${esc(l.note)||'<span class="muted">— ไม่มีโน้ต —</span>'}</div>
+    </div>`).join('')}</div>`:'<p class="empty" style="margin-top:24px">ยังไม่มีบันทึกการดื่ม</p>'}
+  </section>`;
+}
+function mktNum(s){if(!s)return 0;const m=String(s).replace(/,/g,'').match(/\d+(\.\d+)?/g);if(!m)return 0;const n=m.map(Number);return n.length>=2?(n[0]+n[1])/2:n[0];}
+function viewAll(){
+  const all=st.wines;
+  if(!all.length)return '<section class="sec"><div class="eyebrow">Collection</div><h1 class="display">La <em>Collection</em></h1><p class="empty" style="margin-top:20px">ยังไม่มีไวน์ในคลัง</p></section>';
+  const F=st.filt;
+  const countries=[...new Set(all.map(w=>w.country).filter(Boolean))].sort();
+  let rows=all.filter(w=>{
+    if(q&&![w.producer,w.wineName,w.country,w.region,w.subRegion,w.grape,w.vintage].join(' ').toLowerCase().includes(q.toLowerCase()))return false;
+    if(F.type&&w.type!==F.type)return false;
+    if(F.country&&w.country!==F.country)return false;
+    if(F.cab&&cabOf(w)!==Number(F.cab))return false;
+    if(F.ow&&oldNew(w)!==F.ow)return false;
+    if(F.status==='soon'&&!isSoon(w))return false;
+    if(F.status==='single'&&num(w.quantity)!==1)return false;
+    if(F.status==='out'&&num(w.quantity)>0)return false;
+    if(F.need==='nophoto'&&imgSrc(w))return false;
+    if(F.need==='noprice'&&num(w.price))return false;
+    if(F.need==='noslot'&&num(w.col))return false;
+    return true;
+  });
+  const cmp={recent:(a,b)=>(b.addedAt||0)-(a.addedAt||0),score:(a,b)=>num(b.score)-num(a.score),vintage:(a,b)=>(num(a.vintage)||9999)-(num(b.vintage)||9999),producer:(a,b)=>String(a.producer||'').localeCompare(String(b.producer||'')),price:(a,b)=>num(b.price)-num(a.price)};
+  rows=[...rows].sort(cmp[sortK]);
+  const invested=rows.reduce((s,w)=>s+num(w.price)*num(w.quantity),0);
+  const market=rows.reduce((s,w)=>s+mktNum(w.marketPrice)*num(w.quantity),0);
+  const delta=market-invested;
+  const qty=rows.reduce((s,w)=>s+num(w.quantity),0);
+  const opt=(cur,val,lbl)=>`<option value="${val}" ${cur===val?'selected':''}>${lbl}</option>`;
+  return `<section class="sec">
+    <div class="eyebrow">${all.length} Étiquettes · ${rows.length} แสดงอยู่</div>
+    <h1 class="display">La <em>Collection</em></h1>
+    ${(invested||market)?`<div class="money">
+      <div class="mi"><span>เงินลงทุน</span><b>฿${invested.toLocaleString()}</b></div>
+      <div class="mi"><span>มูลค่าตลาด ~</span><b>฿${Math.round(market).toLocaleString()}</b></div>
+      <div class="mi"><span>กำไร/ขาดทุน ~</span><b class="${delta>=0?'up':'down'}">${delta>=0?'+':'−'}฿${Math.abs(Math.round(delta)).toLocaleString()}</b></div>
+      <div class="mi"><span>รวม</span><b>${qty} ขวด</b></div>
+    </div>`:''}
+    <div class="ctrls">
+      <input class="srch" id="srch" placeholder="ค้นหา producer, ภูมิภาค, องุ่น…" value="${esc(q)}">
+      <div class="vtoggle"><button class="${!st.colView?'on':''}" id="vtable">☰ ตาราง</button><button class="${st.colView?'on':''}" id="vcards">▦ การ์ด</button></div>
+      <button class="btn" id="export" style="padding:9px 16px;font-size:11px">⤓ Backup</button>
+    </div>
+    <div class="filters">
+      <select data-filt="type"><option value="">ทุกชนิด</option>${Object.entries(TYPE).map(([v,l])=>opt(F.type,v,l)).join('')}</select>
+      <select data-filt="country"><option value="">ทุกประเทศ</option>${countries.map(c=>opt(F.country,c,esc(c))).join('')}</select>
+      <select data-filt="cab"><option value="">ทุกตู้</option>${CABINETS.map(c=>opt(F.cab,String(c),esc(CAB_NAMES[c]||('Cave '+c)))).join('')}</select>
+      <select data-filt="ow"><option value="">Old/New</option>${opt(F.ow,'Old World','Old World')}${opt(F.ow,'New World','New World')}</select>
+      <select data-filt="status"><option value="">สถานะทั้งหมด</option>${opt(F.status,'soon','ถึงพีค')}${opt(F.status,'single','เหลือขวดเดียว')}${opt(F.status,'out','หมดแล้ว')}</select>
+      <div class="sortbar">${[['recent','ล่าสุด'],['score','คะแนน'],['vintage','ปี'],['price','ราคา']].map(([k,l])=>`<button class="${sortK===k?'on':''}" data-sort="${k}">${l}</button>`).join('')}</div>
+      ${(F.type||F.country||F.cab||F.ow||F.status||F.need)?'<button class="link" id="fclear">ล้างตัวกรอง</button>':''}
+      ${F.need?`<span class="needtag">${({nophoto:'ยังไม่มีรูป',noprice:'ยังไม่ลงราคา',noslot:'ยังไม่จัดช่อง'})[F.need]}</span>`:''}
+    </div>
+    ${st.colView
+      ? `<div class="cards" style="margin-top:24px">${rows.map(cardHtml).join('')}</div>`
+      : `<div class="tbl"><div class="tr th"><span>Bouteille</span><span>Mill.</span><span>Origine</span><span>Score</span><span>Site</span><span>Qté</span><span></span></div>
+    ${rows.map(w=>`<div class="tr"><span class="tb" data-open="${w.id}" style="cursor:pointer">${imgSrc(w)?`<img src="${imgSrc(w)}" loading="lazy" alt="">`:'<span class="none">✦</span>'}<span><b>${esc(w.producer)||'—'}</b><br><span class="muted">${esc(w.wineName)}</span></span></span>
+      <span>${w.vintage||'NV'}</span><span class="muted">${[w.region,w.country].filter(Boolean).map(esc).join(', ')||'—'}</span><span>${esc(w.score)||'—'}</span><span>Site ${w.shelf}</span>
+      <span class="qty"><button data-q="-1" data-id="${w.id}">−</button><span>${w.quantity}</span><button data-q="1" data-id="${w.id}">+</button></span>
+      <span><button class="del" data-del="${w.id}">✕</button></span></div>`).join('')}</div>`}
+  </section>`;
+}
+
+function connect(isSet){
+  const o=document.getElementById('ovl');
+  o.innerHTML=`<div class="ovl"><div class="conn">
+    <h2>${isSet?'Réglages':'Connecter la cave'}</h2>
+    <p>วาง Web App URL ของ Apps Script กับรหัสลับ (token) เก็บในเบราว์เซอร์เครื่องนี้เท่านั้น ไม่ถูกบันทึกขึ้น GitHub</p>
+    <label>Apps Script Web App URL</label><input id="cu" placeholder="https://script.google.com/macros/s/…/exec" value="${CFG?esc(CFG.url):''}">
+    <label>Access token</label><input id="ct" placeholder="ACCESS_TOKEN" value="${CFG?esc(CFG.token):''}">
+    <button class="btn fill full" id="cs" style="margin-top:22px">บันทึกและเชื่อมต่อ</button>
+    ${isSet?`<div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--line)">
+      <label style="display:block;margin-bottom:10px">สำรอง / กู้คืนข้อมูล</label>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" id="cexport">⤓ ดาวน์โหลด Backup</button>
+        <button class="btn" id="crestore">⤴ กู้คืนจากไฟล์</button>
+        <input type="file" id="cfilein" accept="application/json,.json" style="display:none">
+      </div>
+      <p style="font-size:11.5px;color:var(--muted);margin:10px 0 0;line-height:1.5">กู้คืนจะเขียนทับข้อมูลทั้งหมดในคลังด้วยข้อมูลจากไฟล์ backup (.json) — ใช้เมื่อข้อมูลหายหรือย้ายเครื่อง</p>
+    </div>`:''}
+    ${isSet?'<button class="link" id="cx" style="display:block;margin:18px auto 0">ปิด</button>':''}
+  </div></div>`;
+  document.getElementById('cs').onclick=()=>{const url=document.getElementById('cu').value.trim(),token=document.getElementById('ct').value.trim();if(!url||!token){toast('กรอกให้ครบ');return;}CFG={url,token};localStorage.setItem(LS,JSON.stringify(CFG));o.innerHTML='';load();mountChat();};
+  if(isSet){const x=document.getElementById('cx');if(x)x.onclick=()=>o.innerHTML='';
+    const ce=document.getElementById('cexport');if(ce)ce.onclick=exportData;
+    const cr=document.getElementById('crestore'),cf=document.getElementById('cfilein');
+    if(cr&&cf){cr.onclick=()=>cf.click();cf.onchange=()=>restoreData(cf);}
+  }
+}
+async function restoreData(input){
+  const f=input.files&&input.files[0];if(!f)return;
+  let data;
+  try{data=JSON.parse(await f.text());}catch(e){toast('ไฟล์ไม่ถูกต้อง (ต้องเป็นไฟล์ .json ที่ได้จากปุ่ม Backup)');return;}
+  const W=Array.isArray(data)?data:(data.wines||[]);
+  const T=Array.isArray(data)?[]:(data.tasted||[]);
+  const Pr=Array.isArray(data)?[]:(data.prices||[]);
+  const L=Array.isArray(data)?[]:(data.logs||[]);
+  const nw=W.length,nt=T.length,np=Pr.length;
+  if(!nw&&!nt&&!np){toast('ไม่พบข้อมูลในไฟล์นี้');return;}
+  confirmBox({title:'กู้คืนข้อมูล?',desc:`จะเขียนทับข้อมูลทั้งหมดด้วย: ${nw} ขวด · ${nt} Tasted · ${np} ราคา — ของเดิมในคลังจะถูกแทนที่`,danger:true,ok:'กู้คืน (เขียนทับ)',onOk:async()=>{
+    document.getElementById('ovl').innerHTML='';toast('กำลังกู้คืน…');
+    try{
+      await apiPost({action:'importData',wines:W,tasted:T,prices:Pr,logs:L});
+      await load();toast('กู้คืนสำเร็จ');
+    }catch(e){toast('กู้คืนไม่สำเร็จ: '+e.message);}
+  }});
+}
+
+async function onFile(input){
+  const f=input.files&&input.files[0];if(!f)return;
+  st.add.status='reading';st.add.err='';render();
+  try{
+    st.add.photo=await compress(f,1500,0.82);
+    st.add.thumb=await compress(f,300,0.5);
+    const forAI=await compress(f,1200,0.8);
+    try{
+      const r=await apiPost({action:'readLabel',image:forAI});
+      let list=(r.data&&r.data.bottles)||(Array.isArray(r.data)?r.data:[r.data]);
+      if(!list||!list.length)throw new Error('no bottles');
+      st.add.bottles=list.map(ai=>({...emptyBottle(),
+        producer:ai.producer||'',wineName:ai.wineName||'',vintage:ai.vintage==null?'':String(ai.vintage),
+        country:ai.country||'',region:ai.region||'',subRegion:ai.subRegion||'',grape:ai.grape||'',
+        type:ai.type||'red',score:ai.score==null?'':String(ai.score),yearsLeft:ai.yearsLeft==null?'':String(ai.yearsLeft),
+        drinkSoon:!!ai.drinkSoon,shelf:(ai.suggestedShelf>=1&&ai.suggestedShelf<=6)?ai.suggestedShelf:3,quantity:1,marketPrice:ai.marketPrice||''}));
+      st.add.status='review';
+    }catch(e){st.add.bottles=[emptyBottle()];st.add.status='review';st.add.err='ผู้ช่วยอ่านฉลากไม่สำเร็จ กรอกเองได้เลย รูปยังถูกเก็บไว้ ('+e.message+')';}
+  }catch(e){st.add.status='idle';st.add.err='เปิดรูปไม่สำเร็จ';}
+  render();
+}
+function toWine(b){return{id:nid(),producer:b.producer,wineName:b.wineName,vintage:b.vintage?Number(b.vintage):'',country:b.country,region:b.region,subRegion:b.subRegion,grape:b.grape,type:b.type,score:b.score?Number(b.score):'',yearsLeft:b.yearsLeft===''?'':Number(b.yearsLeft),drinkSoon:!!b.drinkSoon,shelf:Number(b.shelf),quantity:Math.max(1,Number(b.quantity)||1),price:b.price?Number(b.price):'',marketPrice:b.marketPrice||'',notes:b.notes,photoId:'',addedAt:Date.now(),row:'',col:b.col?Number(b.col):'',cabinet:b.cabinet?Number(b.cabinet):1,boughtFrom:b.boughtFrom||'',boughtAt:b.boughtAt||''};}
+async function saveOne(i,btn){
+  const wine=toWine(st.add.bottles[i]);
+  if(btn){btn.disabled=true;btn.textContent='กำลังบันทึก…';}
+  try{const r=await apiPost({action:'add',wine,image:st.add.thumb});st.wines.unshift(r.wine);
+    st.add.bottles.splice(i,1);
+    if(!st.add.bottles.length){st.add={photo:null,thumb:null,status:'idle',err:'',bottles:[],saving:-1};st.tab='cellar';st.openShelf=wine.shelf;}
+    render();
+  }catch(e){toast('บันทึกไม่สำเร็จ: '+e.message);if(btn){btn.disabled=false;btn.textContent='ลองอีกครั้ง';}}
+}
+async function saveAll(){
+  const all=document.getElementById('saveall');if(all){all.disabled=true;all.textContent='กำลังบันทึก…';}
+  while(st.add.bottles.length){try{const wine=toWine(st.add.bottles[0]);const r=await apiPost({action:'add',wine,image:st.add.thumb});st.wines.unshift(r.wine);st.add.bottles.shift();}catch(e){toast('บันทึกไม่สำเร็จ: '+e.message);break;}}
+  if(!st.add.bottles.length){st.add={photo:null,thumb:null,status:'idle',err:'',bottles:[],saving:-1};st.tab='cellar';}
+  render();
+}
+async function adjust(id,d){const w=st.wines.find(x=>x.id===id);if(!w)return;const p=num(w.quantity);w.quantity=Math.max(0,p+d);render();try{await apiPost({action:'adjustQty',id,delta:d});saveCache();}catch(e){w.quantity=p;render();toast('อัปเดตไม่สำเร็จ');}}
+function del(id){
+  const w=st.wines.find(x=>x.id===id);
+  confirmBox({title:'ลบขวดนี้?',desc:w?[w.producer,w.wineName,w.vintage].filter(Boolean).join(' '):'',danger:true,ok:'ลบ',onOk:async()=>{
+    if(st.tab==='detail'){st.tab=st.detailFrom||'all';st.detailId=null;}
+    const i=st.wines.findIndex(x=>x.id===id);const bk=st.wines[i];st.wines=st.wines.filter(x=>x.id!==id);render();
+    try{await apiPost({action:'delete',id});saveCache();}catch(e){st.wines.splice(i,0,bk);render();toast('ลบไม่สำเร็จ');}
+  }});
+}
+function drink(id){
+  const w=st.wines.find(x=>x.id===id);if(!w)return;
+  if(num(w.quantity)<=0){toast('ไม่มีขวดเหลือแล้ว');return;}
+  askText({title:'ดื่มขวดนี้',desc:[w.producer,w.wineName,w.vintage].filter(Boolean).join(' '),placeholder:'โน้ตรสชาติ / โอกาส / ดื่มกับใคร (เว้นว่างได้)',ok:'บันทึกการดื่ม',onOk:async(note)=>{
+    const p=num(w.quantity);w.quantity=Math.max(0,p-1);render();
+    try{await apiPost({action:'drink',id,note});st.logs.unshift({ts:Date.now(),wineId:id,producer:w.producer,wineName:w.wineName,vintage:w.vintage,note});saveCache();popCork();toast('🍷 ดื่มแล้ว · เพิ่มลง Journal');}
+    catch(e){w.quantity=p;render();toast('บันทึกไม่สำเร็จ: '+e.message);}
+    render();
+  }});
+}
+function popCork(){
+  const n=14;const box=document.createElement('div');box.className='cork';
+  for(let i=0;i<n;i++){const s=document.createElement('span');const a=(Math.PI*2*i/n)+Math.random();const d=60+Math.random()*70;s.style.setProperty('--dx',Math.cos(a)*d+'px');s.style.setProperty('--dy',(Math.sin(a)*d-30)+'px');s.style.background=['#C9A862','#7E1227','#E0CC7E','#B0904A'][i%4];box.appendChild(s);}
+  document.body.appendChild(box);setTimeout(()=>box.remove(),1100);
+}
+function pair(id){
+  const w=st.wines.find(x=>x.id===id);if(!w)return;
+  st.chat.open=true;mountChat();
+  sendChat('แนะนำเมนูอาหารที่เข้ากับ '+[w.producer,w.wineName,w.vintage].filter(Boolean).join(' ')+' หน่อยครับ');
+}
+function fmtDate(s){if(!s)return '';const d=new Date(s);if(isNaN(d))return esc(s);return d.toLocaleDateString('th-TH',{year:'numeric',month:'short',day:'numeric'});}
+function parseT(s){if(!s)return null;const d=new Date(s);return isNaN(d)?null:d.getTime();}
+function apprecBlock(w,pm){
+  const pts=[];
+  const buyP=num(w.price);
+  if(buyP>0)pts.push({t:parseT(w.boughtAt)||Number(w.addedAt)||Date.now(),p:buyP,lab:'ซื้อ'});
+  (pm||[]).forEach(r=>{const p=num(r.price);if(p>0&&r.addedAt)pts.push({t:Number(r.addedAt),p:p,lab:r.listName||'ราคา'});});
+  const mk=mktNum(w.marketPrice);if(mk>0)pts.push({t:Date.now(),p:mk,lab:'ตลาดตอนนี้'});
+  const uniq=pts.filter(x=>x.t&&x.p).sort((a,b)=>a.t-b.t);
+  if(uniq.length<2)return '';
+  const first=uniq[0],last=uniq[uniq.length-1];
+  const years=(last.t-first.t)/(365.25*864e5);
+  const totalPct=((last.p-first.p)/first.p)*100;
+  const perYrBaht=years>0.08?Math.round((last.p-first.p)/years):null;
+  const perYrPct=years>0.4?(Math.pow(last.p/first.p,1/years)-1)*100:null;
+  // chart geometry
+  const W=320,H=96,pad=6;const ts=uniq.map(u=>u.t),ps=uniq.map(u=>u.p);
+  const tmin=Math.min(...ts),tmax=Math.max(...ts),pmin=Math.min(...ps),pmax=Math.max(...ps);
+  const xx=t=>tmax===tmin?W/2:pad+(t-tmin)/(tmax-tmin)*(W-2*pad);
+  const yy=p=>pmax===pmin?H/2:H-pad-(p-pmin)/(pmax-pmin)*(H-2*pad-8);
+  const pl=uniq.map(u=>`${xx(u.t).toFixed(1)},${yy(u.p).toFixed(1)}`).join(' ');
+  const area=`${pad},${H-pad} ${pl} ${(W-pad)},${H-pad}`;
+  const dots=uniq.map(u=>`<circle cx="${xx(u.t).toFixed(1)}" cy="${yy(u.p).toFixed(1)}" r="2.6" class="ac-dot"/>`).join('');
+  const up=last.p>=first.p;
+  const head=perYrBaht!=null
+    ?`<b class="${up?'up':'down'}">${up?'▲':'▼'} ${up?'+':'−'}฿${Math.abs(perYrBaht).toLocaleString()}/ปี</b>${perYrPct!=null?`<span class="${up?'up':'down'}">${perYrPct>=0?'+':''}${perYrPct.toFixed(1)}%/ปี</span>`:''}`
+    :`<b>${up?'+':'−'}฿${Math.abs(Math.round(last.p-first.p)).toLocaleString()}</b><span>ถือ ${years<0.08?'ไม่ถึงเดือน':years.toFixed(1)+' ปี'} — ยังเฉลี่ยต่อปีไม่ได้</span>`;
+  return `<div class="apprec">
+    <div class="ac-h"><span>แนวโน้มราคา · ${uniq.length} จุดข้อมูล</span><div class="ac-fig">${head}</div></div>
+    <svg viewBox="0 0 ${W} ${H}" class="ac-svg" preserveAspectRatio="none">
+      <polygon points="${area}" class="ac-area"/>
+      <polyline points="${pl}" class="ac-line"/>${dots}
+    </svg>
+    <div class="ac-x"><span>${fmtDate(new Date(first.t).toISOString())}</span><span>฿${first.p.toLocaleString()} → ฿${last.p.toLocaleString()}</span><span>${fmtDate(new Date(last.t).toISOString())}</span></div>
+    ${uniq.length<3?'<p class="ac-note">เก็บราคาหลายช่วงเวลา (อัป Pricelist เรื่อยๆ) กราฟจะแม่นขึ้น</p>':''}
+  </div>`;
+}
+function openDetail(id){st.detailFrom=st.tab==='detail'?st.detailFrom:st.tab;st.detailId=id;st.editing=false;st.editForm=null;st.tab='detail';render();}
+function editFormView(){
+  const f=st.editForm;
+  const ef=(label,key,ph)=>`<div class="fld"><label>${label}</label><input value="${esc(f[key])}" data-ef="${key}" placeholder="${ph||''}"></div>`;
+  const es=(label,key,opts)=>`<div class="fld"><label>${label}</label><select data-ef="${key}">${opts.map(([v,l])=>`<option value="${v}" ${String(f[key])===String(v)?'selected':''}>${l}</option>`).join('')}</select></div>`;
+  const ed=(label,key)=>`<div class="fld"><label>${label}</label><input type="date" value="${esc(f[key])}" data-ef="${key}"></div>`;
+  return `<section class="sec">
+    <button class="link" data-editcancel="1">← ยกเลิกการแก้ไข</button>
+    <h1 class="display" style="font-size:clamp(30px,5vw,46px)">แก้ไข<em>ข้อมูล</em></h1>
+    <div class="bform" style="max-width:680px;margin-top:24px">
+      <div class="grid2">${ef('Producer','producer')}${ef('Wine / Label','wineName')}</div>
+      <div class="grid2" style="margin-top:14px">${ef('Vintage','vintage')}${ef('Score / 100','score')}</div>
+      <div class="grid2" style="margin-top:14px">${ef('Country','country')}${ef('Region','region')}</div>
+      <div class="grid2" style="margin-top:14px">${ef('Sub-region','subRegion')}${ef('Grape','grape')}</div>
+      <div class="grid2" style="margin-top:14px">${es('Style','type',Object.entries(TYPE))}${ef('ราคาที่ซื้อ (บาท)','price')}</div>
+      <div class="grid2" style="margin-top:14px">${ef('ราคาตลาดไทย ~','marketPrice')}${ef('เก็บได้อีก (ปี)','yearsLeft')}</div>
+      <div class="grid2" style="margin-top:14px">${ef('จำนวนขวด','quantity')}${es('ตู้','cabinet',CABINETS.map(c=>[c,CAB_NAMES[c]||('Cave '+c)]))}</div>
+      <div class="grid2" style="margin-top:14px">${es('ชั้น','shelf',SHELVES.map(s=>[s.id,'Site '+s.id+' · '+s.th]))}${ef('ช่อง (slot)','col')}</div>
+      <div class="grid2" style="margin-top:14px">${ef('ซื้อจากที่ไหน','boughtFrom','ร้าน / ดีลเลอร์')}${ed('วันที่ซื้อ','boughtAt')}</div>
+      <label class="chk"><input type="checkbox" id="efsoon" ${f.drinkSoon?'checked':''}><span>ถึงพีค — ควรรีบดื่ม</span></label>
+      <div class="fld" style="margin-top:14px"><label>โน้ต</label><textarea rows="2" data-ef="notes">${esc(f.notes)}</textarea></div>
+      <div style="display:flex;gap:10px;margin-top:20px"><button class="btn fill" id="efsave">บันทึกการแก้ไข</button><button class="btn" id="efcancel">ยกเลิก</button></div>
+    </div></section>`;
+}
+function startEdit(id){const w=st.wines.find(x=>x.id===id);if(!w)return;st.editForm={...w};st.editing=true;render();}
+async function saveEdit(){
+  const f=st.editForm;if(!f)return;
+  const upd={...f,vintage:f.vintage?Number(f.vintage):'',score:f.score?Number(f.score):'',price:f.price?Number(f.price):'',yearsLeft:f.yearsLeft===''?'':Number(f.yearsLeft),quantity:Math.max(0,Number(f.quantity)||0),shelf:Number(f.shelf),cabinet:Number(f.cabinet)||1,col:f.col?Number(f.col):'',drinkSoon:!!f.drinkSoon};
+  const btn=document.getElementById('efsave');if(btn){btn.disabled=true;btn.textContent='กำลังบันทึก…';}
+  try{const r=await apiPost({action:'update',wine:upd});const i=st.wines.findIndex(x=>x.id===f.id);if(i>-1)st.wines[i]=r.wine||upd;saveCache();st.editing=false;st.editForm=null;render();toast('บันทึกแล้ว');}
+  catch(e){toast('บันทึกไม่สำเร็จ: '+e.message);if(btn){btn.disabled=false;btn.textContent='บันทึกการแก้ไข';}}
+}
+async function duplicate(id){
+  const w=st.wines.find(x=>x.id===id);if(!w)return;
+  const copy={...w,id:nid(),quantity:1,col:'',addedAt:Date.now()};
+  toast('กำลังทำซ้ำ…');
+  try{const r=await apiPost({action:'add',wine:copy,image:copy.photo||''});st.wines.unshift(r.wine||copy);saveCache();openDetail((r.wine||copy).id);toast('ทำซ้ำแล้ว — แก้ตำแหน่ง/จำนวนได้เลย');}
+  catch(e){toast('ทำซ้ำไม่สำเร็จ: '+e.message);}
+}
+function similar(id){
+  const w=st.wines.find(x=>x.id===id);if(!w)return;
+  st.chat.open=true;mountChat();
+  sendChat('แนะนำไวน์ที่โน้ตรสชาติหรือราคาใกล้เคียงกับ '+[w.producer,w.wineName,w.vintage].filter(Boolean).join(' ')+' ('+[w.region,w.country].filter(Boolean).join(', ')+') ทั้งจากในคลังของผมเอง และตัวที่น่าหาซื้อเพิ่ม สัก 3-4 ตัว');
+}
+async function savePosition(){
+  const w=st.wines.find(x=>x.id===st.detailId);if(!w)return;
+  const shelf=Number(document.getElementById('pshelf').value);
+  const colv=document.getElementById('pcol').value;
+  const cabv=Number(document.getElementById('pcab').value)||1;
+  const upd={...w,shelf,col:colv?Number(colv):'',cabinet:cabv};
+  const btn=document.getElementById('psave');if(btn){btn.disabled=true;btn.textContent='กำลังบันทึก…';}
+  try{const r=await apiPost({action:'update',wine:upd});const i=st.wines.findIndex(x=>x.id===w.id);if(i>-1)st.wines[i]=r.wine||upd;render();}
+  catch(e){toast('บันทึกตำแหน่งไม่สำเร็จ: '+e.message);if(btn){btn.disabled=false;btn.textContent='บันทึก';}}
+}
+async function setBottlePhoto(input){
+  const f=input.files&&input.files[0];if(!f||!st.detailId)return;
+  const btn=document.getElementById('dpick');if(btn){btn.disabled=true;btn.textContent='กำลังอัปโหลด…';}
+  try{const thumb=await compress(f,300,0.5);const r=await apiPost({action:'setPhoto',id:st.detailId,image:thumb});
+    const i=st.wines.findIndex(x=>x.id===st.detailId);if(i>-1)st.wines[i]=r.wine;render();
+  }catch(e){toast('อัปโหลดรูปไม่สำเร็จ: '+e.message);if(btn){btn.disabled=false;btn.textContent='ลองอีกครั้ง';}}
+}
+
+function exportData(){
+  try{localStorage.setItem('lacave_lastbackup',String(Date.now()));}catch(e){}
+  const stamp=new Date().toISOString().slice(0,10);
+  const backup={version:2,exportedAt:Date.now(),wines:st.wines,tasted:st.tasted,prices:st.prices,logs:st.logs};
+  const json=JSON.stringify(backup,null,2);
+  const cols=['producer','wineName','vintage','country','region','subRegion','grape','type','score','yearsLeft','shelf','quantity','price','marketPrice','notes'];
+  const csv=[cols.join(',')].concat(st.wines.map(w=>cols.map(c=>{const v=w[c]==null?'':String(w[c]).replace(/"/g,'""');return /[",\n]/.test(v)?'"'+v+'"':v;}).join(','))).join('\n');
+  [['lacave-backup-'+stamp+'.json',json,'application/json'],['lacave-'+stamp+'.csv','\ufeff'+csv,'text/csv']].forEach(([name,data,type])=>{
+    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click();URL.revokeObjectURL(a.href);
+  });
+}
+
+let pq='';
+let tfilt='all';
+let tcountry=null;
+let texpand=null;
+function priceKey(r){return (String(r.producer||'')+' '+String(r.wineName||'')+' '+(r.vintage||'')).trim().toLowerCase();}
+function viewPrices(){
+  const P=st.prices||[];const pa=st.padd;
+  if(pa.status==='review'&&pa.rows){
+    return `<section class="sec">
+      <div class="eyebrow">Pricelist · ตรวจก่อนบันทึก</div>
+      <h1 class="display">พบ <em>${pa.rows.length}</em> รายการ</h1>
+      <p class="lede">จากไฟล์: ${esc(pa.fileLabel||'')} — ตรวจ/แก้ได้ แล้วตั้งชื่อแหล่ง (ร้าน/ดีลเลอร์ + วันที่) ก่อนบันทึกเข้าคลังราคา</p>
+      <div class="fld" style="max-width:420px;margin:18px 0"><label>ชื่อแหล่ง / ดีลเลอร์</label><input id="plname" value="${esc(pa.listName||'')}" placeholder="เช่น Wine Dealer A · มิ.ย. 2026"></div>
+      <div class="prev">
+        <div class="prev-h"><span>Producer / Wine</span><span>ปี</span><span>ราคา</span><span></span></div>
+        ${pa.rows.map((r,i)=>`<div class="prev-r">
+          <span><input data-pr="${i}" data-pf="producer" value="${esc(r.producer)}" placeholder="Producer"><input data-pr="${i}" data-pf="wineName" value="${esc(r.wineName)}" placeholder="Wine"></span>
+          <input data-pr="${i}" data-pf="vintage" value="${esc(r.vintage)}" style="width:64px">
+          <input data-pr="${i}" data-pf="price" value="${esc(r.price)}" style="width:90px">
+          <button class="del" data-prdel="${i}">✕</button>
+        </div>`).join('')}
+      </div>
+      <div style="display:flex;gap:10px;margin-top:20px"><button class="btn fill" id="plsave">บันทึก ${pa.rows.length} รายการ</button><button class="btn" id="pladd">＋ เพิ่มแถว</button><button class="btn" id="plcancel">ยกเลิก</button></div>
+    </section>`;
+  }
+  const lists={};
+  P.forEach(r=>{const k=r.listId;if(!lists[k])lists[k]={listId:k,name:r.listName,date:r.addedAt,n:0};lists[k].n++;});
+  const listArr=Object.values(lists).sort((a,b)=>(b.date||0)-(a.date||0));
+  const fmt=ts=>{const d=new Date(Number(ts));return isNaN(d)?'':d.toLocaleDateString('th-TH',{year:'numeric',month:'short',day:'numeric'});};
+  let body='';
+  if(pq){
+    const matched=P.filter(r=>[r.producer,r.wineName,r.vintage,r.note,r.listName].join(' ').toLowerCase().includes(pq.toLowerCase()));
+    const groups={};matched.forEach(r=>{const k=priceKey(r);(groups[k]=groups[k]||[]).push(r);});
+    const gArr=Object.values(groups).map(rows=>rows.slice().sort((a,b)=>num(a.price)-num(b.price)));
+    gArr.sort((a,b)=>num(a[0].price)-num(b[0].price));
+    body=gArr.length?gArr.map(rows=>{const top=rows[0];return `<div class="pcard">
+      <div class="pcard-h"><b>${esc(top.producer)} ${esc(top.wineName)}</b> <i>${top.vintage||''}</i></div>
+      <div class="plist">${rows.map((r,i)=>`<div class="prow ${i===0?'best':''}"><span>${esc(r.listName)} · ${fmt(r.addedAt)}</span><b>฿${num(r.price).toLocaleString()}</b>${i===0?'<span class="bestt">ถูกสุด</span>':''}</div>`).join('')}</div>
+    </div>`;}).join(''):'<p class="empty" style="margin-top:20px">ไม่พบไวน์นี้ใน Pricelist</p>';
+  }else{
+    body=listArr.length?`<div class="eyebrow" style="margin:34px 0 16px">ไฟล์ที่บันทึกไว้</div>${listArr.map(l=>{
+      const rows=P.filter(r=>r.listId===l.listId).slice().sort((a,b)=>num(a.price)-num(b.price));
+      return `<div class="plcard">
+        <div class="plcard-h"><div><b>${esc(l.name)}</b><span>${l.n} รายการ · ${fmt(l.date)}</span></div><button class="del" data-pldel="${l.listId}">ลบ</button></div>
+        <div class="pltable">${rows.map(r=>`<div class="pltr"><span>${esc(r.producer)} ${esc(r.wineName)} ${r.vintage?('<i>'+esc(r.vintage)+'</i>'):''}</span><b>฿${num(r.price).toLocaleString()}</b></div>`).join('')}</div>
+      </div>`;
+    }).join('')}`:'<p class="empty" style="margin-top:24px">ยังไม่มี Pricelist — อัปโหลดโบรชัวร์ไฟล์แรกได้เลย</p>';
+  }
+  return `<section class="sec">
+    <div class="eyebrow">Le Marché · ${P.length} ราคาในคลัง</div>
+    <h1 class="display">Le <em>Marché</em></h1>
+    <p class="lede">อัปโหลดโบรชัวร์/Pricelist (รูป, PDF, Excel, CSV) ให้ AI ดึงรายการราคาเก็บไว้ ค้นหาชื่อไวน์แล้วเทียบได้ว่าร้านไหนถูกสุด</p>
+    ${(()=>{const wm=[];(st.tasted||[]).filter(x=>x.wishlist).forEach(x=>{const wn=(x.wineName||'').toLowerCase().trim();if(!wn)return;const hits=P.filter(p=>((p.producer||'')+' '+(p.wineName||'')).toLowerCase().includes(wn));if(hits.length){const best=hits.reduce((a,b)=>num(b.price)<num(a.price)?b:a);wm.push({name:x.wineName,price:best.price,list:best.listName});}});return wm.length?`<div class="wishalert">⭑ ไวน์ที่คุณ <b>อยากซื้อ</b> มีราคาในคลังแล้ว: ${wm.slice(0,5).map(m=>`<button class="wishhit" data-pq="${esc(m.name)}">${esc(m.name)} · ฿${num(m.price).toLocaleString()}</button>`).join('')}</div>`:'';})()}
+    <div class="puploader" id="pdrop">
+      <input type="file" id="pfile" accept="image/*,application/pdf,.xlsx,.xls,.csv,.tsv" style="display:none">
+      <div style="flex:1;min-width:200px"><b style="font-family:var(--serif);font-size:17px">ลากไฟล์มาวางที่นี่</b><br><span class="muted" style="font-size:12px">หรือกดปุ่ม — รองรับ รูปถ่าย · PDF · Excel · CSV</span></div>
+      <button class="btn fill" id="ppick">⤴ เลือกไฟล์</button>
+      <button class="btn" id="pmanual">✎ กรอกเอง</button>
+      ${pa.status==='reading'?'<div class="reading" style="flex-basis:100%"><span class="spin"></span>กำลังให้ AI อ่านไฟล์… (ไฟล์ใหญ่อาจใช้เวลาสักครู่)</div>':''}
+      ${pa.err?`<div class="warn" style="flex-basis:100%;text-align:left">${esc(pa.err)}</div>`:''}
+    </div>
+    <input class="srch" id="psrch" placeholder="ค้นหาไวน์เพื่อเทียบราคา…" value="${esc(pq)}" style="max-width:420px;margin-top:6px">
+    ${body}
+  </section>`;
+}
+function readFileAsDataURL(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f);});}
+function parseSheet(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>{try{const wb=XLSX.read(new Uint8Array(e.target.result),{type:'array'});let out='';wb.SheetNames.forEach(n=>{out+='# '+n+'\n'+XLSX.utils.sheet_to_csv(wb.Sheets[n])+'\n';});res(out);}catch(err){rej(err);}};r.onerror=rej;r.readAsArrayBuffer(f);});}
+function onPriceFile(input){const f=input.files&&input.files[0];if(f)onPriceFileF(f);}
+async function onPriceFileF(f){
+  if(!f)return;
+  st.padd={status:'reading',err:'',rows:null,listName:f.name.replace(/\.[^.]+$/,''),fileLabel:f.name};render();
+  try{
+    let payload;
+    const name=(f.name||'').toLowerCase();
+    if(/\.(xlsx|xls|csv|tsv)$/.test(name)){
+      if(typeof XLSX==='undefined')throw new Error('ตัวอ่าน Excel ยังโหลดไม่เสร็จ ลองรีเฟรชหน้าแล้วลองใหม่');
+      payload={text:await parseSheet(f)};
+    }else if(f.type==='application/pdf'||/\.pdf$/.test(name)){
+      payload={pdf:await readFileAsDataURL(f)};
+    }else if((f.type||'').startsWith('image/')||/\.(jpe?g|png|webp|heic|heif)$/.test(name)){
+      payload={image:await compress(f,1600,0.85)};
+    }else{throw new Error('ชนิดไฟล์นี้ยังไม่รองรับ (รองรับ รูป/PDF/Excel/CSV)');}
+    const r=await apiPost({action:'readPricelist',...payload});
+    const rows=(r.rows||[]).map(x=>({producer:x.producer||'',wineName:x.wineName||'',vintage:x.vintage==null?'':String(x.vintage),price:x.price==null?'':String(x.price),currency:x.currency||'THB',note:x.note||''}));
+    if(!rows.length)throw new Error('AI อ่านไม่พบรายการราคาในไฟล์นี้ — ลองไฟล์ที่ชัดกว่า หรือกรอกเอง');
+    st.padd.rows=rows;st.padd.status='review';
+  }catch(e){
+    let msg=e.message||'ผิดพลาด';
+    if(/unknown action/i.test(msg))msg='ยังไม่ได้ Deploy หลังบ้านเวอร์ชันใหม่ — ไปที่ Apps Script ▸ Deploy ▸ Manage deployments ▸ Edit ▸ New version ▸ Deploy แล้วลองใหม่';
+    st.padd={status:'idle',err:msg,rows:null,listName:'',fileLabel:''};
+  }
+  render();
+}
+function manualPrice(){st.padd={status:'review',err:'',rows:[{producer:'',wineName:'',vintage:'',price:'',currency:'THB',note:''}],listName:'',fileLabel:'กรอกเอง'};render();}
+function addPriceRow(){if(!st.padd.rows)st.padd.rows=[];st.padd.rows.push({producer:'',wineName:'',vintage:'',price:'',currency:'THB',note:''});render();}
+async function savePriceList(){
+  const pa=st.padd;const rows=(pa.rows||[]).filter(r=>r.wineName||r.producer);
+  if(!rows.length){toast('ไม่มีรายการให้บันทึก');return;}
+  const listName=(document.getElementById('plname')||{}).value||pa.listName||'Pricelist';
+  const btn=document.getElementById('plsave');if(btn){btn.disabled=true;btn.textContent='กำลังบันทึก…';}
+  try{
+    const r=await apiPost({action:'priceAddBatch',rows,listName});
+    const listId=(r.result&&r.result.listId)||('pl_'+Date.now());const now=Date.now();
+    rows.forEach(x=>st.prices.unshift({id:'pr_'+Math.random().toString(36).slice(2,9),listId,listName,producer:x.producer,wineName:x.wineName,vintage:x.vintage,price:Number(x.price)||0,currency:x.currency,note:x.note,addedAt:now}));
+    saveCache();st.padd={status:'idle',err:'',rows:null,listName:'',fileLabel:''};render();toast('บันทึก Pricelist แล้ว');
+  }catch(e){toast('บันทึกไม่สำเร็จ: '+e.message);if(btn){btn.disabled=false;btn.textContent='บันทึก';}}
+}
+function deletePriceList(listId){
+  const l=st.prices.find(r=>r.listId===listId);
+  confirmBox({title:'ลบ Pricelist นี้?',desc:l?(l.listName+' — ราคาทั้งหมดในไฟล์นี้จะถูกลบ'):'',danger:true,ok:'ลบ',onOk:async()=>{
+    const bk=st.prices.slice();st.prices=st.prices.filter(r=>r.listId!==listId);render();
+    try{await apiPost({action:'priceDeleteList',listId});saveCache();}catch(e){st.prices=bk;render();toast('ลบไม่สำเร็จ');}
+  }});
+}
+
+function monthSummary(){
+  const now=new Date();const mo=now.getMonth(),y=now.getFullYear();
+  const mine=(st.logs||[]).filter(l=>{const d=new Date(Number(l.ts));return d.getMonth()===mo&&d.getFullYear()===y;});
+  st.chat.open=true;mountChat();
+  if(!mine.length){sendChat('เดือนนี้ผมยังไม่ได้บันทึกการดื่มเลย ช่วยแนะนำจากคลังที่มีว่าควรเปิดขวดไหนดีในเดือนนี้');return;}
+  const list=mine.map(l=>[l.producer,l.wineName,l.vintage].filter(Boolean).join(' ')+(l.note?(' ('+l.note+')'):'')).join('; ');
+  sendChat('เดือนนี้ผมเปิดไวน์ไป '+mine.length+' ขวด ได้แก่: '+list+' — ช่วยสรุปสั้นๆ ว่าผมชอบสไตล์ไหนเป็นพิเศษ และแนะนำจากคลังที่เหลือว่าควรลองเปิดขวดไหนต่อ');
+}
+
+function openPlace(shelf,slot){
+  const cands=st.wines.filter(w=>num(w.quantity)>0&&cabOf(w)===st.activeCab);
+  const rowHtml=list=>list.length?list.map(w=>`<div class="pickrow" data-pk="${w.id}"><span class="dot2" style="background:${colorByType(w.type)}"></span><span><b>${esc(w.producer)||'—'}</b> <span>${esc(w.wineName)} ${w.vintage||''}</span></span>${(num(w.shelf)===shelf&&num(w.col)===slot)?'<span class="here">อยู่ตรงนี้</span>':(w.col?`<span class="here">S${w.shelf}·${w.col}</span>`:'<span class="here">ยังไม่จัด</span>')}</div>`).join(''):'<p class="empty" style="padding:14px 4px">ไม่พบขวดในตู้นี้</p>';
+  const ov=document.getElementById('ovl');
+  ov.innerHTML=`<div class="ovl"><div class="pick">
+    <h3>วางขวด · Site ${shelf} ช่อง ${slot}</h3>
+    <div class="sub">${esc(CAB_NAMES[st.activeCab]||('Cave '+st.activeCab))} — แตะขวดที่จะย้ายมาช่องนี้</div>
+    <input class="srch" id="pksrch" placeholder="ค้นหา producer / ชื่อ…" style="margin-bottom:14px">
+    <div id="pklist">${rowHtml(cands)}</div>
+    <div class="dlg-act"><button class="btn" id="pkx">ปิด</button></div>
+  </div></div>`;
+  const bindRows=()=>document.querySelectorAll('#pklist [data-pk]').forEach(e=>e.onclick=()=>assignSlot(e.dataset.pk,shelf,slot));
+  bindRows();
+  document.getElementById('pkx').onclick=closeModal;
+  const s=document.getElementById('pksrch');s.oninput=()=>{const v=s.value.toLowerCase();const f=cands.filter(w=>[w.producer,w.wineName,w.region,w.country,w.vintage].join(' ').toLowerCase().includes(v));document.getElementById('pklist').innerHTML=rowHtml(f);bindRows();};
+}
+async function assignSlot(id,shelf,slot){
+  const w=st.wines.find(x=>x.id===id);if(!w)return;
+  const upd={...w,shelf:shelf,col:slot,cabinet:st.activeCab};
+  closeModal();
+  const i=st.wines.findIndex(x=>x.id===id);const bk={...w};
+  st.wines[i]=upd;render();
+  try{const r=await apiPost({action:'update',wine:upd});if(r.wine)st.wines[i]=r.wine;saveCache();toast('วางขวดแล้ว');}
+  catch(e){st.wines[i]=bk;render();toast('ย้ายไม่สำเร็จ: '+e.message);}
+}
+
+function bind(){
+  const m=document.getElementById('main');
+  m.querySelectorAll('[data-go]').forEach(e=>e.onclick=()=>{st.tab=e.dataset.go;render();});
+  m.querySelectorAll('[data-shelf]').forEach(e=>e.onclick=()=>{const id=Number(e.dataset.shelf);st.tab='cellar';st.openShelf=st.openShelf===id?null:id;render();});
+  m.querySelectorAll('[data-q]').forEach(e=>e.onclick=()=>adjust(e.dataset.id,Number(e.dataset.q)));
+  m.querySelectorAll('[data-del]').forEach(e=>e.onclick=()=>del(e.dataset.del));
+  m.querySelectorAll('[data-drink]').forEach(e=>e.onclick=()=>drink(e.dataset.drink));
+  m.querySelectorAll('[data-pair]').forEach(e=>e.onclick=()=>pair(e.dataset.pair));
+  m.querySelectorAll('[data-open]').forEach(e=>e.onclick=()=>openDetail(e.dataset.open));
+  const tip=document.getElementById('catip');
+  if(tip)m.querySelectorAll('.cc.full[data-tip]').forEach(e=>{
+    e.onmouseenter=()=>{tip.textContent=e.dataset.tip;tip.style.display='block';};
+    e.onmousemove=ev=>{tip.style.left=Math.min(ev.clientX+14,window.innerWidth-252)+'px';tip.style.top=(ev.clientY+16)+'px';};
+    e.onmouseleave=()=>{tip.style.display='none';};
+  });
+  m.querySelectorAll('[data-back]').forEach(e=>e.onclick=()=>{st.tab=st.detailFrom||'all';st.detailId=null;render();});
+  const dpick=m.querySelector('#dpick'),dfile=m.querySelector('#dfile');if(dpick&&dfile){dpick.onclick=()=>dfile.click();dfile.onchange=()=>setBottlePhoto(dfile);}
+  m.querySelectorAll('[data-similar]').forEach(e=>e.onclick=()=>similar(e.dataset.similar));
+  m.querySelectorAll('[data-edit]').forEach(e=>e.onclick=()=>startEdit(e.dataset.edit));
+  m.querySelectorAll('[data-dup]').forEach(e=>e.onclick=()=>duplicate(e.dataset.dup));
+  m.querySelectorAll('[data-editcancel],#efcancel').forEach(e=>e.onclick=()=>{st.editing=false;st.editForm=null;render();});
+  m.querySelectorAll('[data-ef]').forEach(e=>e.oninput=()=>{if(st.editForm)st.editForm[e.dataset.ef]=e.value;});
+  const efsoon=m.querySelector('#efsoon');if(efsoon)efsoon.onchange=()=>{if(st.editForm)st.editForm.drinkSoon=efsoon.checked;};
+  const efsave=m.querySelector('#efsave');if(efsave)efsave.onclick=saveEdit;
+  const psave=m.querySelector('#psave');if(psave)psave.onclick=savePosition;
+  m.querySelectorAll('[data-cab]').forEach(e=>e.onclick=()=>{st.activeCab=Number(e.dataset.cab);render();});
+  m.querySelectorAll('[data-place]').forEach(e=>e.onclick=()=>{const p=e.dataset.place.split(':');openPlace(Number(p[0]),Number(p[1]));});
+  const cabren=m.querySelector('#cabren');if(cabren)cabren.onclick=()=>askText({title:'ตั้งชื่อตู้',value:CAB_NAMES[st.activeCab]||('Cave '+st.activeCab),rows:1,placeholder:'เช่น Bordeaux Cellar',ok:'บันทึก',onOk:async(nm)=>{nm=(nm||'').trim();if(!nm)return;CAB_NAMES[st.activeCab]=nm;saveCabNames();render();try{await apiPost({action:'setCabName',cab:st.activeCab,name:nm});toast('เปลี่ยนชื่อตู้แล้ว');}catch(e){toast('บันทึกชื่อขึ้นเซิร์ฟเวอร์ไม่สำเร็จ (เก็บในเครื่องไว้ให้)');}}});
+  const taddbtn=m.querySelector('#taddbtn');if(taddbtn)taddbtn.onclick=()=>{st.tadd={photo:null,thumb:null,status:'review',err:'',form:tEmpty(),queue:[]};render();};
+  m.querySelectorAll('[data-tfil]').forEach(e=>e.onclick=()=>{tfilt=e.dataset.tfil;render();});
+  m.querySelectorAll('[data-tcsel]').forEach(e=>e.onclick=()=>{const k=e.dataset.tcsel;tcountry=tcountry===k?null:k;render();});
+  const tcoclear=m.querySelector('#tcoclear');if(tcoclear)tcoclear.onclick=()=>{tcountry=null;render();};
+  const tpick=m.querySelector('#tpick'),tfile=m.querySelector('#tfile');if(tpick&&tfile){tpick.onclick=()=>tfile.click();tfile.onchange=()=>onTFile(tfile);}
+  const tcancel=m.querySelector('#tcancel');if(tcancel)tcancel.onclick=()=>{st.tadd={photo:null,thumb:null,status:'idle',err:'',form:null};render();};
+  m.querySelectorAll('[data-tf]').forEach(e=>e.oninput=()=>{if(st.tadd.form)st.tadd.form[e.dataset.tf]=e.value;});
+  m.querySelectorAll('[data-tfrate]').forEach(e=>e.onclick=()=>{if(st.tadd.form){st.tadd.form.rating=Number(e.dataset.tfrate);render();}});
+  const twish=m.querySelector('#twish');if(twish)twish.onchange=()=>{if(st.tadd.form)st.tadd.form.wishlist=twish.checked;};
+  const tsave=m.querySelector('#tsave');if(tsave)tsave.onclick=saveTasted;
+  m.querySelectorAll('[data-texp]').forEach(e=>e.onclick=()=>{const id=e.dataset.texp;texpand=texpand===id?null:id;render();});
+  m.querySelectorAll('[data-trate]').forEach(e=>e.onclick=()=>tRate(e.dataset.trate,e.dataset.n));
+  m.querySelectorAll('[data-twish]').forEach(e=>e.onclick=()=>tWish(e.dataset.twish));
+  m.querySelectorAll('[data-tbuy]').forEach(e=>e.onclick=()=>tBuy(e.dataset.tbuy));
+  const ms=m.querySelector('#monthsum');if(ms)ms.onclick=monthSummary;
+  const ppick=m.querySelector('#ppick'),pfile=m.querySelector('#pfile');if(ppick&&pfile){ppick.onclick=()=>pfile.click();pfile.onchange=()=>onPriceFile(pfile);}
+  const pman=m.querySelector('#pmanual');if(pman)pman.onclick=manualPrice;
+  m.querySelectorAll('[data-pq]').forEach(e=>e.onclick=()=>{pq=e.dataset.pq;render();});
+  const pladd=m.querySelector('#pladd');if(pladd)pladd.onclick=addPriceRow;
+  const pdrop=m.querySelector('#pdrop');if(pdrop){['dragover','dragenter'].forEach(ev=>pdrop.addEventListener(ev,e=>{e.preventDefault();pdrop.classList.add('drag');}));['dragleave','drop'].forEach(ev=>pdrop.addEventListener(ev,e=>{e.preventDefault();pdrop.classList.remove('drag');}));pdrop.addEventListener('drop',e=>{const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f)onPriceFileF(f);});}
+  const psrch=m.querySelector('#psrch');if(psrch)psrch.oninput=()=>{pq=psrch.value;const p=psrch.selectionStart;render();const s2=document.getElementById('psrch');if(s2){s2.focus();s2.setSelectionRange(p,p);}};
+  m.querySelectorAll('[data-pr]').forEach(e=>e.oninput=()=>{if(st.padd.rows)st.padd.rows[Number(e.dataset.pr)][e.dataset.pf]=e.value;});
+  m.querySelectorAll('[data-prdel]').forEach(e=>e.onclick=()=>{st.padd.rows.splice(Number(e.dataset.prdel),1);render();});
+  const plsave=m.querySelector('#plsave');if(plsave)plsave.onclick=savePriceList;
+  const plcancel=m.querySelector('#plcancel');if(plcancel)plcancel.onclick=()=>{st.padd={status:'idle',err:'',rows:null,listName:'',fileLabel:''};render();};
+  const plname=m.querySelector('#plname');if(plname)plname.oninput=()=>{st.padd.listName=plname.value;};
+  m.querySelectorAll('[data-pldel]').forEach(e=>e.onclick=()=>deletePriceList(e.dataset.pldel));
+  m.querySelectorAll('[data-tdel]').forEach(e=>e.onclick=()=>tDel(e.dataset.tdel));
+  m.querySelectorAll('[data-map]').forEach(e=>e.onclick=()=>{st.mapMode=e.dataset.map;st.mapSel=null;render();});
+  m.querySelectorAll('[data-msel]').forEach(e=>e.onclick=()=>{const p=e.dataset.msel.split('|');st.mapSel={k:p[0],n:p[1],c:p[2]};render();});
+  m.querySelectorAll('[data-sort]').forEach(e=>e.onclick=()=>{sortK=e.dataset.sort;render();});
+  const s=m.querySelector('#srch');if(s)s.oninput=()=>{q=s.value;const p=s.selectionStart;render();const s2=document.getElementById('srch');if(s2){s2.focus();s2.setSelectionRange(p,p);}};
+  m.querySelectorAll('[data-f]').forEach(e=>e.oninput=()=>{st.add.bottles[Number(e.dataset.bi)][e.dataset.f]=e.value;});
+  m.querySelectorAll('[data-soon]').forEach(e=>e.onchange=()=>{st.add.bottles[Number(e.dataset.bi)].drinkSoon=e.checked;});
+  m.querySelectorAll('[data-rmb]').forEach(e=>e.onclick=()=>{st.add.bottles.splice(Number(e.dataset.rmb),1);if(!st.add.bottles.length)st.add.status='idle';render();});
+  m.querySelectorAll('[data-save1]').forEach(e=>e.onclick=()=>saveOne(Number(e.dataset.save1),e));
+  const s1=m.querySelector('#save1');if(s1)s1.onclick=()=>saveOne(0,s1);
+  const sa=m.querySelector('#saveall');if(sa)sa.onclick=saveAll;
+  const pick=m.querySelector('#pick'),file=m.querySelector('#file');if(pick&&file){pick.onclick=()=>file.click();file.onchange=()=>onFile(file);}
+  const man=m.querySelector('#manual');if(man)man.onclick=()=>{st.add.bottles=[emptyBottle()];st.add.status='review';render();};
+  const ex=m.querySelector('#export');if(ex)ex.onclick=exportData;
+  m.querySelectorAll('[data-filt]').forEach(e=>e.onchange=()=>{st.filt[e.dataset.filt]=e.value;render();});
+  const vt=m.querySelector('#vtable');if(vt)vt.onclick=()=>{st.colView=false;render();};
+  const vc=m.querySelector('#vcards');if(vc)vc.onclick=()=>{st.colView=true;render();};
+  const fc=m.querySelector('#fclear');if(fc)fc.onclick=()=>{st.filt={type:'',country:'',cab:'',ow:'',status:''};render();};
+  m.querySelectorAll('[data-need]').forEach(e=>e.onclick=()=>{st.filt={type:'',country:'',cab:'',ow:'',status:'',need:e.dataset.need};st.colView=true;st.tab='all';render();});
+  const bknow=m.querySelector('#bknow');if(bknow)bknow.onclick=exportData;
+}
+
+function hasUnsaved(){return (st.tab==='add'&&st.add.status==='review'&&st.add.bottles.length)||st.editing||(st.tab==='tasted'&&st.tadd.status==='review')||(st.tab==='prices'&&st.padd.status==='review'&&st.padd.rows&&st.padd.rows.length);}
+function navTo(tab){
+  if(tab===st.tab){st.openShelf=null;st.mapSel=null;render();return;}
+  const go=()=>{st.editing=false;st.editForm=null;st.tab=tab;st.openShelf=null;st.mapSel=null;render();};
+  if(hasUnsaved())confirmBox({title:'ออกโดยไม่บันทึก?',desc:'มีข้อมูลที่กรอกไว้แต่ยังไม่บันทึก ถ้าออกตอนนี้ข้อมูลจะหาย',danger:true,ok:'ออกเลย',onOk:go});
+  else go();
+}
+document.querySelectorAll('.nav button[data-tab]').forEach(b=>b.onclick=()=>navTo(b.dataset.tab));
+window.addEventListener('beforeunload',e=>{if(hasUnsaved()){e.preventDefault();e.returnValue='';}});
+document.getElementById('gear').onclick=()=>connect(true);
+document.getElementById('gsearch').onclick=()=>openSearch('');
+function openSearch(q){
+  const o=document.getElementById('ovl');
+  const ql=(q||'').toLowerCase().trim();
+  let wHits=[],tHits=[],pHits=[];
+  if(ql){
+    wHits=st.wines.filter(w=>[w.producer,w.wineName,w.vintage,w.country,w.region,w.subRegion,w.grape].join(' ').toLowerCase().includes(ql)).slice(0,8);
+    tHits=(st.tasted||[]).filter(x=>[x.producer,x.wineName,x.vintage,x.country,x.region].join(' ').toLowerCase().includes(ql)).slice(0,6);
+    pHits=(st.prices||[]).filter(p=>[p.producer,p.wineName,p.vintage,p.listName].join(' ').toLowerCase().includes(ql)).sort((a,b)=>num(a.price)-num(b.price)).slice(0,8);
+  }
+  const sec=(title,html)=>html?`<div class="gs-sec"><div class="gs-t">${title}</div>${html}</div>`:'';
+  const wHtml=wHits.map(w=>`<button class="gs-row" data-gsw="${w.id}"><span class="gs-dot" style="background:${colorByType(w.type)}"></span><span><b>${esc(w.producer)||'—'}</b> ${esc(w.wineName)} ${w.vintage||''}</span><span class="gs-tag">คลัง · Site ${w.shelf}</span></button>`).join('');
+  const tHtml=tHits.map(x=>`<button class="gs-row" data-gst="${x.id}"><span class="gs-dot" style="background:${colorByType(x.type)}"></span><span><b>${esc(x.producer)||'—'}</b> ${esc(x.wineName)} ${x.vintage||''}</span><span class="gs-tag">${x.wishlist?'อยากซื้อ':'เคยดื่ม'}</span></button>`).join('');
+  const pHtml=pHits.map(p=>`<button class="gs-row" data-gsp="${esc(p.wineName||p.producer)}"><span class="gs-dot" style="background:var(--orange)"></span><span><b>${esc(p.producer)} ${esc(p.wineName)}</b> ${p.vintage||''}</span><span class="gs-tag">฿${num(p.price).toLocaleString()} · ${esc(p.listName)}</span></button>`).join('');
+  o.innerHTML=`<div class="ovl gs-ovl"><div class="gs">
+    <input id="gsi" class="srch" placeholder="ค้นหาไวน์ในคลัง, Tasted, ราคา…" value="${esc(q)}" autocomplete="off">
+    <div class="gs-body">${ql?((wHtml||tHtml||pHtml)?(sec('ในคลัง',wHtml)+sec('เคยดื่ม / อยากซื้อ',tHtml)+sec('ราคา (Marché)',pHtml)):'<p class="empty" style="padding:18px 4px">ไม่พบผลลัพธ์</p>'):'<p class="empty" style="padding:18px 4px">พิมพ์เพื่อค้นหาทั้งเว็บ</p>'}</div>
+    <button class="link" id="gsx" style="display:block;margin:4px auto 0">ปิด</button>
+  </div></div>`;
+  const inp=document.getElementById('gsi');inp.focus();inp.setSelectionRange(inp.value.length,inp.value.length);
+  inp.oninput=()=>openSearch(inp.value);
+  document.getElementById('gsx').onclick=()=>{o.innerHTML='';};
+  o.querySelectorAll('[data-gsw]').forEach(e=>e.onclick=()=>{o.innerHTML='';openDetail(e.dataset.gsw);});
+  o.querySelectorAll('[data-gst]').forEach(e=>e.onclick=()=>{o.innerHTML='';texpand=e.dataset.gst;tcountry=null;st.tab='tasted';render();});
+  o.querySelectorAll('[data-gsp]').forEach(e=>e.onclick=()=>{o.innerHTML='';pq=e.dataset.gsp;st.tab='prices';render();});
+}
+
+/* ── sommelier chat ── */
+const SUGGEST=['ตอนนี้ควรเปิดขวดไหนก่อน?','ขวดไหนควรเก็บต่อ?','แนะนำไวน์คู่สเต๊กหน่อย','Bordeaux กับ Burgundy ต่างกันยังไง?'];
+function chatCellar(){return JSON.stringify(st.wines.map(w=>({producer:w.producer,wine:w.wineName,vintage:w.vintage,country:w.country,region:w.region,type:w.type,score:w.score,yearsLeft:w.yearsLeft,drinkSoon:w.drinkSoon,shelf:w.shelf,qty:w.quantity,buyPrice:w.price,market:w.marketPrice})));}
+function linkifyWines(text){
+  let html=esc(text);
+  const seen=new Set();
+  st.wines.forEach(w=>{
+    const nm=(w.wineName||'').trim();
+    if(nm.length<4)return;const key=nm.toLowerCase();if(seen.has(key))return;seen.add(key);
+    const e=esc(nm).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+    try{html=html.replace(new RegExp('(?![^<]*>)('+e+')','i'),'<a class="winelink" data-openwine="'+w.id+'">$1</a>');}catch(err){}
+  });
+  return html;
+}
+function mountChat(){
+  const c=document.getElementById('chat');if(!c)return;
+  if(!CFG){c.innerHTML='';return;}
+  c.innerHTML=`<button class="fab ${st.chat.open?'hide':''}" id="fab" title="ถามซอมเมอลิเยร์">✦</button>
+   ${st.chat.open?`<div class="chatwin">
+     <div class="chat-hd"><div class="who"><div class="av">L</div><div><b>Léon</b><span>Sommelier</span></div></div><button class="chat-x" id="chatx">✕</button></div>
+     <div class="chat-body" id="cbody"></div>
+     ${st.chat.msgs.length<=1?`<div class="chips-q">${SUGGEST.map(s=>`<button data-ask="${esc(s)}">${esc(s)}</button>`).join('')}</div>`:''}
+     ${st.chat.img?`<div class="chat-pend"><img src="${st.chat.img}"><button id="cclr" title="ลบรูป">✕</button><span>แนบรูปแล้ว</span></div>`:''}
+     <div class="chat-in">
+       <input type="file" id="cfile" accept="image/*" style="display:none">
+       <button class="chat-cam" id="ccam" title="แนบรูป">📷</button>
+       <textarea id="cin" rows="1" placeholder="ถามเรื่องไวน์ หรือแนบรูป…"></textarea>
+       <button id="csend" ${st.chat.busy?'disabled':''}>↑</button>
+     </div>
+   </div>`:''}`;
+  const fab=document.getElementById('fab');if(fab)fab.onclick=()=>{st.chat.open=true;if(!st.chat.msgs.length)st.chat.msgs.push({role:'assistant',text:'สวัสดีครับ ผม Léon ซอมเมอลิเยร์ประจำคลังของคุณ 🍷 ถามได้เลยว่าควรเปิดขวดไหน เก็บขวดไหน จับคู่อาหาร หรือถ่าย/แนบรูปฉลากมาถามก็ได้'});mountChat();};
+  const x=document.getElementById('chatx');if(x)x.onclick=()=>{st.chat.open=false;mountChat();};
+  const body=document.getElementById('cbody');
+  if(body){
+    body.innerHTML=st.chat.msgs.map(m=>`<div class="msg ${m.role==='user'?'u':'a'}">${m.image?`<img class="msgimg" src="${m.image}">`:''}${m.text?(m.role==='user'?esc(m.text):linkifyWines(m.text)):''}</div>`).join('')+(st.chat.busy?'<div class="msg a typing">กำลังคิด…</div>':'');
+    body.scrollTop=body.scrollHeight;
+    body.querySelectorAll('[data-openwine]').forEach(e=>e.onclick=()=>{st.chat.open=false;mountChat();openDetail(e.dataset.openwine);});
+  }
+  c.querySelectorAll('[data-ask]').forEach(e=>e.onclick=()=>sendChat(e.dataset.ask));
+  const send=document.getElementById('csend'),inp=document.getElementById('cin');
+  if(send)send.onclick=()=>sendChat(inp?inp.value:'');
+  if(inp)inp.onkeydown=ev=>{if(ev.key==='Enter'&&!ev.shiftKey){ev.preventDefault();sendChat(inp.value);}};
+  const cam=document.getElementById('ccam'),cfile=document.getElementById('cfile');
+  if(cam&&cfile){cam.onclick=()=>cfile.click();cfile.onchange=async()=>{const f=cfile.files&&cfile.files[0];if(!f)return;try{st.chat.img=await compress(f,1000,0.78);mountChat();const ci=document.getElementById('cin');if(ci)ci.focus();}catch(e){toast('เปิดรูปไม่สำเร็จ');}};}
+  const clr=document.getElementById('cclr');if(clr)clr.onclick=()=>{st.chat.img=null;mountChat();};
+}
+async function sendChat(text){
+  text=(text||'').trim();if((!text&&!st.chat.img)||st.chat.busy)return;
+  const msg={role:'user',text};if(st.chat.img)msg.image=st.chat.img;
+  st.chat.msgs.push(msg);st.chat.img=null;st.chat.busy=true;mountChat();
+  const payload=st.chat.msgs.map((m,i)=>i===st.chat.msgs.length-1?m:{role:m.role,text:m.text});
+  try{
+    const r=await apiPost({action:'chat',messages:payload});
+    st.chat.msgs.push({role:'assistant',text:r.reply||'ขออภัยครับ ตอบไม่ได้ในตอนนี้'});
+  }catch(e){st.chat.msgs.push({role:'assistant',text:'ขออภัยครับ มีปัญหาในการเชื่อมต่อ ('+e.message+')'});}
+  st.chat.busy=false;mountChat();
+}
+
+if(CFG){if(loadCache())st.loaded=true;load();mountChat();}else render();
+</script>
+</body>
+</html>
